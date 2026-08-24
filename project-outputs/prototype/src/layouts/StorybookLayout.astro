@@ -1,0 +1,197 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+
+const currentPath = Astro.url.pathname;
+
+const navSections = [
+  {
+    heading: 'Tokens',
+    items: [
+      { label: 'Colors', href: '/storybook/colors' },
+      { label: 'Typography', href: '/storybook/typography' },
+      { label: 'Spacing', href: '/storybook/spacing' },
+      { label: 'Icons', href: '/storybook/icons' },
+    ],
+  },
+  {
+    heading: 'Components',
+    items: [
+      { label: 'Header', href: '/storybook/components/header' },
+      { label: 'Button', href: '/storybook/components/button' },
+    ],
+  },
+];
+---
+
+<BaseLayout title={`${title} — Design System`}>
+  <div class="sb-shell">
+    <aside class="sb-sidebar">
+      <a href="/storybook" class="sb-logo">
+        <span class="sb-logo-mark">DS</span>
+        <span class="sb-logo-text">Plopsa Design System</span>
+      </a>
+
+      <nav class="sb-nav">
+        {navSections.map((section) => (
+          <div class="sb-nav-section">
+            <h3 class="sb-nav-heading">{section.heading}</h3>
+            <ul class="sb-nav-list">
+              {section.items.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    class:list={['sb-nav-link', { active: currentPath.startsWith(item.href) }]}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </nav>
+
+      <div class="sb-sidebar-footer">
+        <a href="/" class="sb-nav-link">&larr; Home</a>
+        <a href="/prototype" class="sb-nav-link">Prototype &rarr;</a>
+      </div>
+    </aside>
+
+    <main class="sb-main">
+      <header class="sb-header">
+        <h1 class="sb-page-title">{title}</h1>
+      </header>
+      <div class="sb-content">
+        <slot />
+      </div>
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  .sb-shell {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  .sb-sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background: var(--color-gray-600);
+    color: var(--color-white);
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-6);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  .sb-logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--color-white);
+    text-decoration: none;
+    margin-bottom: var(--space-8);
+  }
+
+  .sb-logo-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: var(--color-primary-300);
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--text-paragraph-small);
+    flex-shrink: 0;
+  }
+
+  .sb-logo-text {
+    font-size: var(--text-paragraph-small);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--leading-tight);
+  }
+
+  .sb-nav {
+    flex: 1;
+  }
+
+  .sb-nav-section {
+    margin-bottom: var(--space-6);
+  }
+
+  .sb-nav-heading {
+    font-family: var(--font-body);
+    font-size: var(--text-paragraph-xs);
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-gray-300);
+    margin-bottom: var(--space-2);
+  }
+
+  .sb-nav-list {
+    list-style: none;
+  }
+
+  .sb-nav-link {
+    display: block;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    color: var(--color-gray-200);
+    text-decoration: none;
+    font-size: var(--text-paragraph-small);
+    transition: background var(--transition-fast), color var(--transition-fast);
+  }
+
+  .sb-nav-link:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-white);
+    text-decoration: none;
+  }
+
+  .sb-nav-link.active {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--color-white);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .sb-sidebar-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .sb-main {
+    flex: 1;
+    min-width: 0;
+    background: var(--color-gray-100);
+  }
+
+  .sb-header {
+    padding: var(--space-8) var(--space-10);
+    background: var(--color-white);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .sb-page-title {
+    font-size: var(--text-h3);
+    color: var(--color-body);
+  }
+
+  .sb-content {
+    padding: var(--space-8) var(--space-10);
+  }
+</style>

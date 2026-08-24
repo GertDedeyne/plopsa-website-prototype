@@ -1,0 +1,185 @@
+---
+import StorybookLayout from '../../layouts/StorybookLayout.astro';
+import Icon from '../../components/Icon.astro';
+import { readdirSync } from 'node:fs';
+import { basename, join } from 'node:path';
+
+function toKebab(str: string) {
+  return str
+    .replace(/([a-z])([A-Z])/g, '$1-$2')
+    .replace(/[\s_]+/g, '-')
+    .toLowerCase();
+}
+
+const iconsRoot = join(process.cwd(), '../../project-inputs/icons');
+const categories = ['large', 'medium', 'social', 'country'];
+
+const groups = categories.map((category) => {
+  let files: string[] = [];
+  try {
+    files = readdirSync(join(iconsRoot, category))
+      .filter((f) => f.endsWith('.svg'))
+      .sort();
+  } catch {
+    // skip missing dirs
+  }
+
+  const icons = files.map((f) => {
+    const name = toKebab(basename(f, '.svg'));
+    return { id: `${category}-${name}`, label: name };
+  });
+
+  return { category, icons };
+}).filter((g) => g.icons.length > 0);
+---
+
+<StorybookLayout title="Icons">
+  <p class="intro">
+    {groups.reduce((sum, g) => sum + g.icons.length, 0)} icons across {groups.length} categories,
+    served as a single SVG sprite at <code>/icons.svg</code>.
+  </p>
+
+  <div class="usage">
+    <h2>Usage</h2>
+    <pre><code>&lt;Icon name="medium-magnifying-glass" size={24} /&gt;</code></pre>
+    <p class="usage-note">
+      Import from <code>../../components/Icon.astro</code>. The icon inherits
+      <code>currentColor</code> from its parent.
+    </p>
+  </div>
+
+  {groups.map((group) => (
+    <section class="icon-section">
+      <h2 class="section-title">
+        {group.category.charAt(0).toUpperCase() + group.category.slice(1)}
+        <span class="section-count">{group.icons.length}</span>
+      </h2>
+
+      <div class="icon-grid">
+        {group.icons.map((icon) => (
+          <div class="icon-card">
+            <div class="icon-preview">
+              <Icon
+                name={icon.id}
+                size={group.category === 'large' ? 48 : 24}
+              />
+            </div>
+            <span class="icon-name">{icon.id}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+  ))}
+</StorybookLayout>
+
+<style>
+  .intro {
+    font-size: var(--text-paragraph-lead);
+    color: var(--color-gray-400);
+    max-width: 640px;
+    margin-bottom: var(--space-6);
+    line-height: var(--leading-normal);
+  }
+
+  .intro code {
+    background: var(--color-gray-100);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    font-size: var(--text-paragraph-small);
+  }
+
+  .usage {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+    margin-bottom: var(--space-8);
+  }
+
+  .usage h2 {
+    font-size: var(--text-h5);
+    margin-bottom: var(--space-3);
+  }
+
+  .usage pre {
+    background: var(--color-gray-600);
+    color: var(--color-white);
+    padding: var(--space-4);
+    border-radius: var(--radius-sm);
+    overflow-x: auto;
+    font-size: var(--text-paragraph-small);
+    margin-bottom: var(--space-3);
+  }
+
+  .usage-note {
+    font-size: var(--text-paragraph-small);
+    color: var(--color-gray-400);
+  }
+
+  .usage-note code {
+    background: var(--color-gray-100);
+    padding: 1px 4px;
+    border-radius: var(--radius-sm);
+    font-size: var(--text-paragraph-xs);
+  }
+
+  .icon-section {
+    margin-bottom: var(--space-10);
+  }
+
+  .section-title {
+    font-size: var(--text-h4);
+    margin-bottom: var(--space-4);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .section-count {
+    font-size: var(--text-paragraph-small);
+    font-weight: var(--font-weight-regular);
+    color: var(--color-gray-300);
+    background: var(--color-gray-100);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+  }
+
+  .icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--space-3);
+  }
+
+  .icon-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition: border-color var(--transition-fast);
+  }
+
+  .icon-card:hover {
+    border-color: var(--color-primary-300);
+  }
+
+  .icon-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    color: var(--color-body);
+  }
+
+  .icon-name {
+    font-size: var(--text-paragraph-xs);
+    color: var(--color-gray-400);
+    text-align: center;
+    word-break: break-all;
+    line-height: var(--leading-tight);
+  }
+</style>

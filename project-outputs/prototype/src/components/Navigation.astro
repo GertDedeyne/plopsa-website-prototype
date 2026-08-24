@@ -1,0 +1,420 @@
+---
+import Icon from './Icon.astro';
+
+interface NavItem {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath } = Astro.props;
+
+const navItems: NavItem[] = [
+  { label: 'Tickets', href: '/prototype/tickets' },
+  { label: 'Overnachten', href: '/prototype/overnachten' },
+  { label: 'Het Park', href: '/prototype/het-park' },
+  { label: 'Plan je bezoek', href: '/prototype/plan-je-bezoek' },
+  { label: 'Abonnementen', href: '/prototype/abonnementen' },
+];
+---
+
+<header class="nav-header">
+  <nav class="nav-bar">
+    <a href="/prototype" class="nav-logo">
+      <img src="/logo-plopsaland.svg" alt="Plopsaland De Panne" />
+    </a>
+
+    <ul class="nav-list" role="list">
+      {navItems.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class:list={['nav-link', { 'is-active': currentPath === item.href }]}
+            aria-current={currentPath === item.href ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="mobile-menu" aria-hidden="true">
+      <div class="mobile-menu-top">
+        <button class="mobile-menu-close" type="button" aria-label="Menu sluiten">
+          <Icon name="medium-x" size={16} />
+        </button>
+      </div>
+      <div class="mobile-menu-items">
+        {navItems.map((item) => (
+          <a
+            href={item.href}
+            class:list={['mobile-menu-link', { 'is-active': currentPath === item.href }]}
+            aria-current={currentPath === item.href ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <button class="nav-search" type="button" aria-label="Zoeken">
+        <Icon name="medium-magnifying-glass" size={24} />
+      </button>
+
+      <a href="/prototype/tickets" class="nav-tickets-mobile" aria-label="Tickets">
+        <Icon name="medium-ticket" size={20} />
+      </a>
+
+      <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false">
+        <Icon name="medium-menu" size={24} />
+      </button>
+
+      <a href="/prototype/tickets" class="nav-tickets-desktop">
+        <Icon name="medium-ticket" size={20} />
+        <span class="nav-tickets-label">tickets</span>
+      </a>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.querySelector('.nav-toggle');
+  const mobileMenu = document.querySelector('.mobile-menu');
+  const closeBtn = document.querySelector('.mobile-menu-close');
+
+  function openMenu() {
+    mobileMenu?.classList.add('is-open');
+    mobileMenu?.setAttribute('aria-hidden', 'false');
+    toggle?.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    mobileMenu?.classList.remove('is-open');
+    mobileMenu?.setAttribute('aria-hidden', 'true');
+    toggle?.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  toggle?.addEventListener('click', openMenu);
+  closeBtn?.addEventListener('click', closeMenu);
+</script>
+
+<style>
+  .nav-header {
+    background: var(--color-white);
+    border-bottom: 1px solid var(--color-neutral-300);
+  }
+
+  .nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-6) var(--space-4);
+  }
+
+  .nav-logo {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-logo img {
+    display: block;
+    width: 159px;
+    height: auto;
+  }
+
+  .nav-list {
+    display: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-link {
+    display: block;
+    padding: var(--space-3) var(--space-4);
+    font-family: var(--font-heading);
+    font-size: var(--text-paragraph-body);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--leading-normal);
+    color: var(--color-primary-300);
+    text-decoration: none;
+    transition: color var(--transition-fast), background var(--transition-fast);
+    border-radius: var(--radius-sm);
+  }
+
+  .nav-link:hover {
+    color: var(--color-primary-200);
+    background: var(--color-neutral-100);
+    text-decoration: none;
+  }
+
+  .nav-link.is-active {
+    color: var(--color-primary-400);
+    background: var(--color-neutral-100);
+  }
+
+  /* -- Actions -- */
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    flex-shrink: 0;
+  }
+
+  .nav-search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 2px solid var(--color-primary-300);
+    border-radius: var(--radius-full);
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    transition: background var(--transition-fast), border-color var(--transition-fast);
+    color: var(--color-primary-300);
+  }
+
+  .nav-search:hover {
+    background: var(--color-neutral-100);
+    border-color: var(--color-primary-200);
+  }
+
+  .nav-tickets-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    background: var(--gradient-red);
+    color: var(--color-white);
+    text-decoration: none;
+  }
+
+  .nav-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-body);
+  }
+
+  .nav-tickets-desktop {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    height: 56px;
+    padding: 0 var(--space-6);
+    background: var(--gradient-red);
+    color: var(--color-white);
+    border-radius: 48px;
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--leading-none);
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: opacity var(--transition-fast);
+  }
+
+  .nav-tickets-desktop:hover {
+    opacity: 0.9;
+    text-decoration: none;
+  }
+
+  .nav-tickets-label {
+    display: inline;
+  }
+
+  /* -- Mobile menu panel -- */
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: var(--color-white);
+    flex-direction: column;
+  }
+
+  .mobile-menu.is-open {
+    display: flex;
+  }
+
+  .mobile-menu-top {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .mobile-menu-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-body);
+  }
+
+  .mobile-menu-items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-6) var(--space-4);
+    border-top: 1px solid var(--color-neutral-300);
+  }
+
+  .mobile-menu-link {
+    display: block;
+    padding: var(--space-3) var(--space-2);
+    font-family: var(--font-heading);
+    font-size: var(--text-button);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--leading-none);
+    color: var(--color-primary-300);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition: color var(--transition-fast), background var(--transition-fast);
+  }
+
+  .mobile-menu-link:hover {
+    color: var(--color-primary-200);
+    background: var(--color-neutral-100);
+  }
+
+  .mobile-menu-link.is-active {
+    color: var(--color-primary-400);
+    background: var(--color-neutral-100);
+  }
+
+  /* -- Desktop -- */
+
+  @media (min-width: 1200px) {
+    .nav-bar {
+      gap: var(--space-16);
+      min-height: 120px;
+      padding: 0 var(--space-16);
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    .nav-logo img {
+      width: 240px;
+    }
+
+    .nav-list {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      position: static;
+      gap: var(--space-6);
+      flex: 1;
+      width: auto;
+      padding: 0;
+      border-bottom: none;
+      background: none;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 120px;
+      padding: var(--space-12) 0;
+      font-size: 18px;
+      line-height: var(--leading-none);
+      white-space: nowrap;
+      position: relative;
+      background: none;
+      border-radius: 0;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--color-primary-300);
+      transform: scaleX(0);
+      transition: transform var(--transition-base);
+    }
+
+    .nav-link:hover::after,
+    .nav-link.is-active::after {
+      transform: scaleX(1);
+    }
+
+    .nav-link:hover {
+      background: none;
+    }
+
+    .nav-link.is-active {
+      color: var(--color-primary-400);
+      background: none;
+    }
+
+    .nav-actions {
+      gap: var(--space-3);
+    }
+
+    .nav-search {
+      width: 56px;
+      height: 56px;
+    }
+
+    .nav-tickets-mobile {
+      display: none;
+    }
+
+    .nav-toggle {
+      display: none;
+    }
+
+    .mobile-menu {
+      display: none !important;
+    }
+
+    .nav-tickets-desktop {
+      display: flex;
+      min-width: 56px;
+      padding: 0;
+    }
+
+    .nav-tickets-label {
+      display: none;
+    }
+  }
+
+  @media (min-width: 1300px) {
+    .nav-tickets-desktop {
+      padding: 0 var(--space-6);
+    }
+
+    .nav-tickets-label {
+      display: inline;
+    }
+  }
+</style>

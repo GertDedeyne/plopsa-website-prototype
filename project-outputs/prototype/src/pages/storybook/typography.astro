@@ -1,0 +1,432 @@
+---
+import StorybookLayout from '../../layouts/StorybookLayout.astro';
+
+const headingStyles = {
+  desktop: [
+    { name: 'Display',    family: 'Ubuntu', size: '64px', weight: 700, lineHeight: '125%' },
+    { name: 'Heading H1', family: 'Ubuntu', size: '40px', weight: 700, lineHeight: '125%' },
+    { name: 'Heading H2', family: 'Ubuntu', size: '34px', weight: 700, lineHeight: '150%' },
+    { name: 'Heading H3', family: 'Ubuntu', size: '28px', weight: 700, lineHeight: '150%' },
+    { name: 'Heading H4', family: 'Ubuntu', size: '24px', weight: 700, lineHeight: '150%' },
+    { name: 'Heading H5', family: 'Ubuntu', size: '22px', weight: 700, lineHeight: '150%' },
+    { name: 'Heading H6', family: 'Ubuntu', size: '18px', weight: 700, lineHeight: '150%' },
+  ],
+  mobile: [
+    { name: 'Display',    family: 'Ubuntu', size: '32px', weight: 700, lineHeight: '125%' },
+    { name: 'Heading H1', family: 'Ubuntu', size: '30px', weight: 700, lineHeight: '125%' },
+    { name: 'Heading H2', family: 'Ubuntu', size: '28px', weight: 700, lineHeight: '150%' },
+    { name: 'Heading H3', family: 'Ubuntu', size: '24px', weight: 700, lineHeight: '150%' },
+    { name: 'Heading H4', family: 'Ubuntu', size: '22px', weight: 700, lineHeight: '150%' },
+    { name: 'Heading H5', family: 'Ubuntu', size: '20px', weight: 700, lineHeight: '150%' },
+    { name: 'Heading H6', family: 'Ubuntu', size: '18px', weight: 700, lineHeight: '150%' },
+  ],
+};
+
+const paragraphStyles = [
+  { name: 'Paragraph Lead',        family: 'Metropolis', size: '18px', weights: [400, 600], lineHeight: '150%' },
+  { name: 'Paragraph Body',        family: 'Metropolis', size: '16px', weights: [400, 600], lineHeight: '150%' },
+  { name: 'Paragraph Small',       family: 'Metropolis', size: '14px', weights: [400, 600], lineHeight: '150%' },
+  { name: 'Paragraph Extra Small', family: 'Metropolis', size: '12px', weights: [400, 600], lineHeight: '150%' },
+];
+
+const utilityStyles = {
+  desktop: [
+    { name: 'Button',      family: 'Ubuntu', size: '18px', weight: 600, lineHeight: '100%', transform: 'none' },
+    { name: 'Button CAPS', family: 'Ubuntu', size: '18px', weight: 600, lineHeight: '100%', transform: 'uppercase' },
+    { name: 'URL',         family: 'Metropolis',   size: '16px', weight: 700, lineHeight: '150%', decoration: 'underline' },
+  ],
+  mobile: [
+    { name: 'Button',      family: 'Ubuntu', size: '16px', weight: 600, lineHeight: '100%', transform: 'none' },
+    { name: 'URL',         family: 'Metropolis',   size: '16px', weight: 700, lineHeight: '150%', decoration: 'underline' },
+  ],
+};
+
+const sampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.';
+---
+
+<StorybookLayout title="Typography">
+
+  <section class="type-section">
+    <h2 class="section-title">Font Families</h2>
+    <div class="font-families">
+      <div class="font-card">
+        <p class="font-specimen font-specimen--heading">Ubuntu</p>
+        <p class="font-meta">
+          <code>var(--font-heading)</code> — Headings, Display, Buttons
+        </p>
+        <p class="font-sample font-sample--heading">
+          ABCDEFGHIJKLMNOPQRSTUVWXYZ<br />
+          abcdefghijklmnopqrstuvwxyz<br />
+          0123456789
+        </p>
+      </div>
+
+      <div class="font-card">
+        <p class="font-specimen font-specimen--body">Metropolis</p>
+        <p class="font-meta">
+          <code>var(--font-body)</code> — Body text, Paragraphs, URLs
+        </p>
+        <p class="font-sample font-sample--body">
+          ABCDEFGHIJKLMNOPQRSTUVWXYZ<br />
+          abcdefghijklmnopqrstuvwxyz<br />
+          0123456789
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="type-section">
+    <h2 class="section-title">Headings — Desktop</h2>
+    <div class="style-list">
+      {headingStyles.desktop.map((style) => (
+        <div class="style-row">
+          <div class="style-meta-col">
+            <p class="style-name">{style.name}</p>
+            <div class="style-specs">
+              <span>font-family: {style.family}</span>
+              <span>font-size: {style.size}</span>
+              <span>font-weight: {style.weight}</span>
+              <span>line-height: {style.lineHeight}</span>
+            </div>
+          </div>
+          <p
+            class="style-specimen"
+            style={`font-family: var(--font-heading); font-size: ${style.size}; font-weight: ${style.weight}; line-height: ${parseInt(style.lineHeight) / 100};`}
+          >
+            {sampleText}
+          </p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+
+  <section class="type-section">
+    <h2 class="section-title">Headings — Mobile</h2>
+    <div class="style-list">
+      {headingStyles.mobile.map((style) => (
+        <div class="style-row">
+          <div class="style-meta-col">
+            <p class="style-name">{style.name}</p>
+            <div class="style-specs">
+              <span>font-family: {style.family}</span>
+              <span>font-size: {style.size}</span>
+              <span>font-weight: {style.weight}</span>
+              <span>line-height: {style.lineHeight}</span>
+            </div>
+          </div>
+          <p
+            class="style-specimen"
+            style={`font-family: var(--font-heading); font-size: ${style.size}; font-weight: ${style.weight}; line-height: ${parseInt(style.lineHeight) / 100};`}
+          >
+            {sampleText}
+          </p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+
+  <section class="type-section">
+    <h2 class="section-title">Paragraphs</h2>
+    <p class="section-note">Same sizes on desktop and mobile.</p>
+    <div class="style-list">
+      {paragraphStyles.map((style) => (
+        <div class="style-row">
+          <div class="style-meta-col">
+            <p class="style-name">{style.name}</p>
+            <div class="style-specs">
+              <span>font-family: {style.family}</span>
+              <span>font-size: {style.size}</span>
+              <span>font-weight: {style.weights.join(' – ')}</span>
+              <span>line-height: {style.lineHeight}</span>
+            </div>
+          </div>
+          <div class="style-specimen-group">
+            <p
+              class="style-specimen"
+              style={`font-family: var(--font-body); font-size: ${style.size}; font-weight: 400; line-height: 1.5;`}
+            >
+              {sampleText}
+            </p>
+            <p
+              class="style-specimen"
+              style={`font-family: var(--font-body); font-size: ${style.size}; font-weight: 600; line-height: 1.5;`}
+            >
+              {sampleText}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+
+  <section class="type-section">
+    <h2 class="section-title">Utility Styles — Desktop</h2>
+    <div class="style-list">
+      {utilityStyles.desktop.map((style) => (
+        <div class="style-row">
+          <div class="style-meta-col">
+            <p class="style-name">{style.name}</p>
+            <div class="style-specs">
+              <span>font-family: {style.family}</span>
+              <span>font-size: {style.size}</span>
+              <span>font-weight: {style.weight}</span>
+              <span>line-height: {style.lineHeight}</span>
+              {style.transform === 'uppercase' && <span>text-transform: uppercase</span>}
+              {style.decoration === 'underline' && <span>text-decoration: underline</span>}
+            </div>
+          </div>
+          <p
+            class="style-specimen"
+            style={`font-family: var(${style.family === 'Ubuntu' ? '--font-heading' : '--font-body'}); font-size: ${style.size}; font-weight: ${style.weight}; line-height: ${parseInt(style.lineHeight) / 100}; ${style.transform === 'uppercase' ? 'text-transform: uppercase;' : ''} ${style.decoration === 'underline' ? 'text-decoration: underline;' : ''}`}
+          >
+            Meer weten
+          </p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+
+  <section class="type-section">
+    <h2 class="section-title">Utility Styles — Mobile</h2>
+    <div class="style-list">
+      {utilityStyles.mobile.map((style) => (
+        <div class="style-row">
+          <div class="style-meta-col">
+            <p class="style-name">{style.name}</p>
+            <div class="style-specs">
+              <span>font-family: {style.family}</span>
+              <span>font-size: {style.size}</span>
+              <span>font-weight: {style.weight}</span>
+              <span>line-height: {style.lineHeight}</span>
+              {style.decoration === 'underline' && <span>text-decoration: underline</span>}
+            </div>
+          </div>
+          <p
+            class="style-specimen"
+            style={`font-family: var(${style.family === 'Ubuntu' ? '--font-heading' : '--font-body'}); font-size: ${style.size}; font-weight: ${style.weight}; line-height: ${parseInt(style.lineHeight) / 100}; ${style.decoration === 'underline' ? 'text-decoration: underline;' : ''}`}
+          >
+            Meer weten
+          </p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+
+  <section class="type-section">
+    <h2 class="section-title">Desktop vs Mobile Comparison</h2>
+    <div class="comparison-table-wrapper">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Style</th>
+            <th>Font</th>
+            <th>Desktop</th>
+            <th>Mobile</th>
+            <th>Weight</th>
+            <th>Line Height</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Display</td><td>Ubuntu</td><td>64px</td><td>32px</td><td>700</td><td>125%</td></tr>
+          <tr><td>H1</td><td>Ubuntu</td><td>40px</td><td>30px</td><td>700</td><td>125%</td></tr>
+          <tr><td>H2</td><td>Ubuntu</td><td>34px</td><td>28px</td><td>700</td><td>150%</td></tr>
+          <tr><td>H3</td><td>Ubuntu</td><td>28px</td><td>24px</td><td>700</td><td>150%</td></tr>
+          <tr><td>H4</td><td>Ubuntu</td><td>24px</td><td>22px</td><td>700</td><td>150%</td></tr>
+          <tr><td>H5</td><td>Ubuntu</td><td>22px</td><td>20px</td><td>700</td><td>150%</td></tr>
+          <tr><td>H6</td><td>Ubuntu</td><td>18px</td><td>18px</td><td>700</td><td>150%</td></tr>
+          <tr><td>Lead</td><td>Metropolis</td><td>18px</td><td>18px</td><td>400 – 600</td><td>150%</td></tr>
+          <tr><td>Body</td><td>Metropolis</td><td>16px</td><td>16px</td><td>400 – 600</td><td>150%</td></tr>
+          <tr><td>Small</td><td>Metropolis</td><td>14px</td><td>14px</td><td>400 – 600</td><td>150%</td></tr>
+          <tr><td>XS</td><td>Metropolis</td><td>12px</td><td>12px</td><td>400 – 600</td><td>150%</td></tr>
+          <tr><td>Button</td><td>Ubuntu</td><td>18px</td><td>16px</td><td>600</td><td>100%</td></tr>
+          <tr><td>Button CAPS</td><td>Ubuntu</td><td>18px</td><td>—</td><td>600</td><td>100%</td></tr>
+          <tr><td>URL</td><td>Metropolis</td><td>16px</td><td>16px</td><td>700</td><td>150%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</StorybookLayout>
+
+<style>
+  .type-section {
+    margin-bottom: var(--space-12);
+  }
+
+  .section-title {
+    font-size: 20px;
+    font-family: var(--font-heading);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--space-4);
+    color: var(--color-black);
+  }
+
+  .section-note {
+    font-size: 14px;
+    color: var(--color-neutral-500);
+    margin-bottom: var(--space-4);
+  }
+
+  .font-families {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-6);
+  }
+
+  .font-card {
+    padding: var(--space-6);
+    border: 1px solid var(--color-neutral-300);
+    border-radius: var(--radius-md);
+    background: var(--color-white);
+  }
+
+  .font-specimen {
+    font-size: 30px;
+    margin-bottom: var(--space-2);
+  }
+
+  .font-specimen--heading {
+    font-family: var(--font-heading);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .font-specimen--body {
+    font-family: var(--font-body);
+    font-weight: var(--font-weight-regular);
+  }
+
+  .font-meta {
+    font-size: 14px;
+    color: var(--color-neutral-500);
+    margin-bottom: var(--space-4);
+  }
+
+  .font-meta code {
+    font-size: 12px;
+    background: var(--color-neutral-100);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+  }
+
+  .font-sample {
+    font-size: 14px;
+    color: var(--color-neutral-500);
+    line-height: 1.75;
+  }
+
+  .font-sample--heading { font-family: var(--font-heading); }
+  .font-sample--body { font-family: var(--font-body); }
+
+  .style-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .style-row {
+    display: flex;
+    gap: var(--space-6);
+    align-items: flex-start;
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--color-neutral-300);
+  }
+
+  .style-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .style-meta-col {
+    flex-shrink: 0;
+    width: 260px;
+  }
+
+  .style-name {
+    font-family: var(--font-body);
+    font-weight: var(--font-weight-semibold);
+    font-size: 15px;
+    color: var(--color-black);
+    margin-bottom: var(--space-1);
+  }
+
+  .style-specs {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 12px;
+    color: var(--color-neutral-400);
+    line-height: 1.6;
+  }
+
+  .style-specimen {
+    flex: 1;
+    min-width: 0;
+    color: var(--color-black);
+    word-break: break-word;
+  }
+
+  .style-specimen-group {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    gap: var(--space-6);
+  }
+
+  .style-specimen-group .style-specimen {
+    flex: 1;
+  }
+
+  .comparison-table-wrapper {
+    overflow-x: auto;
+  }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-body);
+    font-size: 14px;
+  }
+
+  .comparison-table th,
+  .comparison-table td {
+    text-align: left;
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--color-neutral-300);
+  }
+
+  .comparison-table th {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-neutral-500);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .comparison-table td {
+    color: var(--color-black);
+  }
+
+  .comparison-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  @media (max-width: 767px) {
+    .style-row {
+      flex-direction: column;
+    }
+
+    .style-meta-col {
+      width: 100%;
+    }
+
+    .style-specimen-group {
+      flex-direction: column;
+    }
+  }
+</style>

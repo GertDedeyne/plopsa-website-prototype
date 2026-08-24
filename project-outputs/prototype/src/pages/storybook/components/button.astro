@@ -1,0 +1,245 @@
+---
+import StorybookLayout from '../../../layouts/StorybookLayout.astro';
+import Button from '../../../components/Button.astro';
+import Icon from '../../../components/Icon.astro';
+
+const colors = ['purple', 'red', 'burgundy', 'blue', 'white'] as const;
+---
+
+<StorybookLayout title="Button — Primary">
+
+  <section class="comp-section">
+    <h2 class="section-title">Color Variants — Large</h2>
+    <div class="comp-row">
+      <div class="comp-demo">
+        {colors.map((c) => (
+          <Button color={c} size="lg">{c}</Button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+
+  <section class="comp-section">
+    <h2 class="section-title">Color Variants — Small</h2>
+    <div class="comp-row">
+      <div class="comp-demo">
+        {colors.map((c) => (
+          <Button color={c} size="sm">{c}</Button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+
+  <section class="comp-section">
+    <h2 class="section-title">Sizes</h2>
+    <div class="comp-row">
+      <div class="comp-demo comp-demo--align-end">
+        <Button color="purple" size="lg">Large — 56px</Button>
+        <Button color="purple" size="sm">Small — 48px</Button>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="comp-section">
+    <h2 class="section-title">Disabled States</h2>
+    <div class="comp-row">
+      <div class="comp-demo">
+        {colors.map((c) => (
+          <Button color={c} size="lg" disabled>{c}</Button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+
+  <section class="comp-section">
+    <h2 class="section-title">With Icons</h2>
+    <div class="comp-row">
+      <div class="comp-demo">
+        <Button color="purple" size="lg">
+          <Icon name="medium-ticket" size={20} slot="icon-left" />
+          Buy Tickets
+        </Button>
+        <Button color="red" size="sm">
+          Explore
+          <Icon name="medium-arrow-right" size={18} slot="icon-right" />
+        </Button>
+        <Button color="white" size="lg">
+          <Icon name="medium-magnifying-glass" size={20} slot="icon-left" />
+          Search
+        </Button>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="comp-section">
+    <h2 class="section-title">As Link</h2>
+    <div class="comp-row">
+      <div class="comp-demo">
+        <Button href="/storybook" color="purple" size="lg">Link Button</Button>
+        <Button href="/storybook" color="white" size="sm">Link White</Button>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="comp-section">
+    <h2 class="section-title">On Dark Background</h2>
+    <div class="comp-row">
+      <div class="comp-demo comp-demo--dark">
+        <Button color="white" size="lg">White on Dark</Button>
+        <Button color="red" size="lg">Red on Dark</Button>
+        <Button color="blue" size="sm">Blue on Dark</Button>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="comp-section">
+    <h2 class="section-title">Props</h2>
+    <table class="props-table">
+      <thead>
+        <tr>
+          <th>Prop</th>
+          <th>Type</th>
+          <th>Default</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>color</code></td>
+          <td><code>'purple' | 'red' | 'burgundy' | 'blue' | 'white'</code></td>
+          <td><code>'purple'</code></td>
+          <td>Color variant with radial gradient background</td>
+        </tr>
+        <tr>
+          <td><code>size</code></td>
+          <td><code>'lg' | 'sm'</code></td>
+          <td><code>'lg'</code></td>
+          <td>Large (56px, uppercase) or Small (48px, normal case)</td>
+        </tr>
+        <tr>
+          <td><code>disabled</code></td>
+          <td><code>boolean</code></td>
+          <td><code>false</code></td>
+          <td>Disables interaction (50% opacity, 75% for white)</td>
+        </tr>
+        <tr>
+          <td><code>href</code></td>
+          <td><code>string</code></td>
+          <td>—</td>
+          <td>Renders as &lt;a&gt; instead of &lt;button&gt;</td>
+        </tr>
+        <tr>
+          <td><code>type</code></td>
+          <td><code>'button' | 'submit' | 'reset'</code></td>
+          <td><code>'button'</code></td>
+          <td>HTML button type (when not a link)</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+
+  <section class="comp-section">
+    <h2 class="section-title">Slots</h2>
+    <table class="props-table">
+      <thead>
+        <tr>
+          <th>Slot</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>default</code></td>
+          <td>Button label text</td>
+        </tr>
+        <tr>
+          <td><code>icon-left</code></td>
+          <td>Icon before the label</td>
+        </tr>
+        <tr>
+          <td><code>icon-right</code></td>
+          <td>Icon after the label</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+</StorybookLayout>
+
+<style>
+  .comp-section {
+    margin-bottom: var(--space-8);
+  }
+
+  .section-title {
+    font-size: var(--text-h5);
+    margin-bottom: var(--space-4);
+    color: var(--color-gray-500);
+  }
+
+  .comp-row {
+    margin-bottom: var(--space-4);
+  }
+
+  .comp-demo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-white);
+  }
+
+  .comp-demo--align-end {
+    align-items: flex-end;
+  }
+
+  .comp-demo--dark {
+    background: var(--color-gray-600);
+    border-color: var(--color-gray-500);
+  }
+
+  .props-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    font-size: var(--text-paragraph-small);
+  }
+
+  .props-table th,
+  .props-table td {
+    text-align: left;
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .props-table th {
+    background: var(--color-gray-100);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--text-paragraph-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-gray-400);
+  }
+
+  .props-table code {
+    font-size: var(--text-paragraph-xs);
+    background: var(--color-gray-100);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    color: var(--color-primary-300);
+  }
+</style>

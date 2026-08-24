@@ -1,0 +1,181 @@
+---
+interface Props {
+  color?: 'purple' | 'red' | 'burgundy' | 'blue' | 'white';
+  size?: 'lg' | 'sm';
+  disabled?: boolean;
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+}
+
+const {
+  color = 'purple',
+  size = 'lg',
+  disabled = false,
+  href,
+  type = 'button',
+  class: className,
+} = Astro.props;
+
+const Tag = href ? 'a' : 'button';
+const attrs = href
+  ? { href: disabled ? undefined : href }
+  : { type, disabled };
+
+const hasIconLeft = Astro.slots.has('icon-left');
+const hasIconRight = Astro.slots.has('icon-right');
+---
+
+<Tag
+  class:list={[
+    'btn',
+    `btn--${color}`,
+    `btn--${size}`,
+    { 'btn--disabled': disabled },
+    className,
+  ]}
+  {...attrs}
+>
+  {hasIconLeft && <span class="btn-icon"><slot name="icon-left" /></span>}
+  <slot />
+  {hasIconRight && <span class="btn-icon"><slot name="icon-right" /></span>}
+</Tag>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    font-family: var(--font-heading);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--leading-none);
+    border: 2px solid transparent;
+    border-radius: 48px;
+    cursor: pointer;
+    text-decoration: none;
+    transition:
+      border-color var(--transition-fast),
+      opacity var(--transition-fast),
+      box-shadow var(--transition-fast);
+  }
+
+  /* --- Sizes --- */
+
+  .btn--lg {
+    height: 56px;
+    font-size: 18px;
+    padding: 0 var(--space-6);
+    text-transform: uppercase;
+  }
+
+  .btn--sm {
+    height: 48px;
+    font-size: 16px;
+    padding: 0 var(--space-4);
+    text-transform: none;
+  }
+
+  /* --- Color: Purple --- */
+
+  .btn--purple {
+    background: var(--gradient-purple);
+    color: var(--color-white);
+  }
+
+  .btn--purple:hover {
+    background: var(--color-primary-purple-300);
+  }
+
+  .btn--purple:active {
+    background: var(--color-primary-purple-400);
+  }
+
+  /* --- Color: Red --- */
+
+  .btn--red {
+    background: var(--gradient-red);
+    color: var(--color-white);
+  }
+
+  .btn--red:hover {
+    background: var(--color-primary-red-300);
+  }
+
+  .btn--red:active {
+    background: var(--color-primary-red-400);
+  }
+
+  /* --- Color: Burgundy --- */
+
+  .btn--burgundy {
+    background: var(--gradient-burgundy);
+    color: var(--color-white);
+  }
+
+  .btn--burgundy:hover {
+    background: var(--color-primary-burgundy-300);
+  }
+
+  .btn--burgundy:active {
+    background: var(--color-primary-burgundy-400);
+  }
+
+  /* --- Color: Blue --- */
+
+  .btn--blue {
+    background: var(--gradient-blue);
+    color: var(--color-white);
+  }
+
+  .btn--blue:hover {
+    background: var(--color-primary-blue-300);
+  }
+
+  .btn--blue:active {
+    background: var(--color-primary-blue-400);
+  }
+
+  /* --- Color: White --- */
+
+  .btn--white {
+    background: var(--color-white);
+    color: var(--color-primary-purple-300);
+  }
+
+  .btn--white:hover {
+    background: var(--color-neutral-100);
+  }
+
+  .btn--white:active {
+    background: var(--color-neutral-200);
+  }
+
+  /* --- Disabled --- */
+
+  .btn--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .btn--white.btn--disabled {
+    opacity: 0.75;
+  }
+
+  /* --- Focus --- */
+
+  .btn:focus-visible {
+    outline: none;
+    border-color: #388bff;
+    box-shadow: inset 0 0 0 2px #388bff;
+  }
+
+  /* --- Icon slot --- */
+
+  .btn-icon {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+</style>

@@ -1,0 +1,194 @@
+/**
+ * Design tokens from the Plopsa Website Design System (V3).
+ * Source: Figma — https://www.figma.com/design/ghFWhcaiIMAobuIljHYR5C/Plopsa-Website--Design-system---V3
+ */
+:root {
+  /* Typography */
+  --font-body: 'Metropolis', ui-sans-serif, system-ui, sans-serif;
+  --font-heading: 'Ubuntu', ui-sans-serif, system-ui, sans-serif;
+
+  /* Font Weights */
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Line Heights */
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-none: 1;
+
+  /* ── Desktop Typography (≥ 768px) ── */
+
+  --text-display: 64px;
+  --text-h1: 40px;
+  --text-h2: 34px;
+  --text-h3: 28px;
+  --text-h4: 24px;
+  --text-h5: 22px;
+  --text-h6: 18px;
+
+  --text-paragraph-lead: 18px;
+  --text-paragraph-body: 16px;
+  --text-paragraph-small: 14px;
+  --text-paragraph-xs: 12px;
+
+  --text-button: 18px;
+  --text-button-caps: 18px;
+  --text-url: 16px;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* Neutrals */
+  --color-white: #fff;
+  --color-black: #0b1215;
+  --color-gray-100: #f2f3f4;
+  --color-gray-200: #dbd7de;
+  --color-gray-300: #8e9497;
+  --color-gray-400: #4e4f52;
+  --color-gray-500: #202427;
+  --color-gray-600: #222334;
+  --color-body: var(--color-black);
+
+  /* Primary */
+  --color-primary-purple-200: #a1477f;
+  --color-primary-purple-300: #731c52;
+  --color-primary-purple-400: #461131;
+  --color-primary-blue-200: #6899b0;
+  --color-primary-blue-300: #3f6576;
+  --color-primary-blue-400: #314f5c;
+  --color-primary-burgundy-200: #b5476e;
+  --color-primary-burgundy-300: #a3194a;
+  --color-primary-burgundy-400: #80143a;
+  --color-primary-red-200: #ed5a7b;
+  --color-primary-red-300: #d60f3c;
+  --color-primary-red-400: #a80c2f;
+  --color-primary-orange-200: #ec6726;
+  --color-primary-orange-300: #ee3d05;
+  --color-primary-200: var(--color-primary-purple-200);
+  --color-primary-300: var(--color-primary-purple-300);
+  --color-primary-400: var(--color-primary-purple-400);
+
+  /* Secondary */
+  --color-secondary-green-200: #9cc9c4;
+  --color-secondary-green-300: #569e95;
+  --color-secondary-green-400: #447d76;
+  --color-secondary-beige-200: #fbf2ef;
+  --color-secondary-beige-300: #ebe0dc;
+  --color-secondary-beige-400: #d3b9b0;
+  --color-secondary-beige-500: #bc9485;
+  --color-secondary-blue-200: #d9f2ff;
+  --color-secondary-blue-300: #a1daf8;
+  --color-secondary-blue-400: #5dbdf0;
+  --color-secondary-orange-200: #ffd6c2;
+  --color-secondary-orange-300: #ec6726;
+  --color-secondary-orange-400: #ee3d05;
+
+  /* Tertiary */
+  --color-tertiary-green: #7ebc26;
+  --color-tertiary-pink: #db0a5b;
+  --color-tertiary-blue: #0461cf;
+  --color-tertiary-yellow: #ffe500;
+
+  /* Neutral scale */
+  --color-neutral-100: #f4f3ee;
+  --color-neutral-200: #e8e6dd;
+  --color-neutral-300: #dedcd3;
+  --color-neutral-400: #c5bfbb;
+  --color-neutral-500: #8c8581;
+  --color-neutral-600: #463f3a;
+  --color-neutral-700: #1a1715;
+
+  /* Enhancers */
+  --color-enhancer-green: #89ce00;
+  --color-enhancer-orange: #eb3f00;
+
+  /* Semantic */
+  --color-success: #109a15;
+  --color-danger: var(--color-primary-red-400);
+  --color-warning: #d8b234;
+  --color-info: #082538;
+  --color-link: var(--color-primary-300);
+  --color-border: var(--color-gray-200);
+
+  /* Shadows */
+  --color-box-shadow: rgba(205, 205, 205, 0.5);
+  --color-box-shadow-dark: #64646f33;
+  --shadow-sm: 0 1px 2px var(--color-box-shadow);
+  --shadow-md: 0 4px 6px var(--color-box-shadow);
+  --shadow-lg: 0 10px 15px var(--color-box-shadow-dark);
+
+  /* Outline */
+  --outline-width-default: 3px;
+  --outline-style-default: solid;
+  --outline-color-default: var(--color-primary-300);
+  --outline-base-default: var(--outline-width-default) var(--outline-style-default)
+    var(--outline-color-default);
+  --outline-offset-default: 4px;
+
+  /* Gradients */
+  --gradient-beige-white: radial-gradient(
+    61.64% 84.23% at 50% 0%,
+    var(--color-secondary-beige-200) 0%,
+    var(--color-white) 100%
+  );
+  --gradient-beige-black: radial-gradient(
+    61.64% 84.23% at 50% 0%,
+    var(--color-neutral-600) 0%,
+    var(--color-black) 100%
+  );
+  --gradient-purple: radial-gradient(
+    61.64% 84.23% at 50% 0%,
+    var(--color-primary-purple-200) 0%,
+    var(--color-primary-300) 100%
+  );
+  --gradient-blue: radial-gradient(
+    61.64% 84.23% at 50% 0%,
+    var(--color-primary-blue-200) 0%,
+    var(--color-primary-blue-300) 100%
+  );
+  --gradient-burgundy: radial-gradient(
+    61.64% 84.23% at 50% 0%,
+    var(--color-primary-burgundy-200) 0%,
+    var(--color-primary-burgundy-300) 100%
+  );
+  --gradient-red: radial-gradient(
+    61.64% 84.23% at 50% 0%,
+    var(--color-primary-red-200) 0%,
+    var(--color-primary-red-300) 100%
+  );
+  --gradient-black: linear-gradient(6.72deg, rgba(0, 0, 0, 0.75) 5.27%, rgba(0, 0, 0, 0) 94.73%);
+  --gradient-orange: linear-gradient(
+    270deg,
+    var(--color-secondary-orange-400) 0%,
+    var(--color-secondary-orange-300) 100%
+  );
+  --gradient-scroll-overlay: linear-gradient(
+    180deg,
+    rgba(251, 242, 239, 0) 0%,
+    var(--color-secondary-beige-200) 100%
+  );
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 350ms ease;
+}

@@ -1,0 +1,32 @@
+---
+interface Props {
+  name: string;
+  size?: number | string;
+  class?: string;
+  'aria-label'?: string;
+}
+
+const { name, size = 24, class: className, 'aria-label': ariaLabel, ...rest } = Astro.props;
+const isDecorative = !ariaLabel;
+---
+
+<svg
+  class:list={['icon', className]}
+  width={size}
+  height={size}
+  aria-hidden={isDecorative ? 'true' : undefined}
+  aria-label={ariaLabel}
+  role={ariaLabel ? 'img' : undefined}
+  {...rest}
+>
+  <use href={`/icons.svg#${name}`} />
+</svg>
+
+<style>
+  .icon {
+    display: inline-block;
+    vertical-align: middle;
+    flex-shrink: 0;
+    fill: currentColor;
+  }
+</style>

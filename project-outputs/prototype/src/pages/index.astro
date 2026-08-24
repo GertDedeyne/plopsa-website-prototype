@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Home">
+  <div class="home">
+    <div class="home-content">
+      <h1 class="home-title">Plopsa Website</h1>
+      <p class="home-subtitle">Interactive prototype & design system</p>
+
+      <div class="home-cards">
+        <a href="/storybook" class="home-card">
+          <div class="home-card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" />
+            </svg>
+          </div>
+          <h2>Design System</h2>
+          <p>Colors, typography, spacing tokens and interactive components</p>
+        </a>
+
+        <a href="/prototype" class="home-card">
+          <div class="home-card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" />
+            </svg>
+          </div>
+          <h2>Desktop</h2>
+          <p>Interactive website prototype using the design system components</p>
+        </a>
+
+        <a href="/mobile" class="home-card">
+          <div class="home-card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="5" y="2" width="14" height="20" rx="2" /><line x1="12" y1="18" x2="12" y2="18" />
+            </svg>
+          </div>
+          <h2>Mobile</h2>
+          <p>Mobile prototype in a 375×812 device mockup</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .home {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gradient-beige-white);
+    padding: var(--space-8);
+  }
+
+  .home-content {
+    text-align: center;
+    max-width: 900px;
+  }
+
+  .home-title {
+    font-size: var(--text-display);
+    color: var(--color-primary-300);
+    margin-bottom: var(--space-2);
+  }
+
+  .home-subtitle {
+    font-size: var(--text-h5);
+    color: var(--color-gray-400);
+    margin-bottom: var(--space-10);
+  }
+
+  .home-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+  }
+
+  .home-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-8) var(--space-6);
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .home-card:hover {
+    border-color: var(--color-primary-300);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+
+  .home-card-icon {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-gray-100);
+    border-radius: var(--radius-md);
+    color: var(--color-primary-300);
+  }
+
+  .home-card h2 {
+    font-size: var(--text-h5);
+    font-family: var(--font-body);
+  }
+
+  .home-card p {
+    font-size: var(--text-paragraph-small);
+    color: var(--color-gray-300);
+    line-height: var(--leading-normal);
+  }
+</style>

@@ -1,0 +1,105 @@
+@import './tokens.css';
+
+@font-face {
+  font-family: 'Metropolis';
+  src: url('/fonts/Metropolis-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Metropolis';
+  src: url('/fonts/Metropolis-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Metropolis';
+  src: url('/fonts/Metropolis-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  src: url('/fonts/ubuntu-regular-webfont.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  src: url('/fonts/ubuntu-bold-webfont.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-paragraph-body);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--leading-normal);
+  color: var(--color-body);
+  background-color: var(--color-white);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: var(--font-weight-bold);
+}
+
+h1 { font-size: 30px; line-height: var(--leading-tight); }
+h2 { font-size: 28px; line-height: var(--leading-normal); }
+h3 { font-size: 24px; line-height: var(--leading-normal); }
+h4 { font-size: 22px; line-height: var(--leading-normal); }
+h5 { font-size: 20px; line-height: var(--leading-normal); }
+h6 { font-size: 18px; line-height: var(--leading-normal); }
+
+@media (min-width: 768px) {
+  h1 { font-size: var(--text-h1); line-height: var(--leading-tight); }
+  h2 { font-size: var(--text-h2); line-height: var(--leading-normal); }
+  h3 { font-size: var(--text-h3); line-height: var(--leading-normal); }
+  h4 { font-size: var(--text-h4); line-height: var(--leading-normal); }
+  h5 { font-size: var(--text-h5); line-height: var(--leading-normal); }
+  h6 { font-size: var(--text-h6); line-height: var(--leading-normal); }
+}
+
+a {
+  color: var(--color-link);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+:focus-visible {
+  outline: var(--outline-base-default);
+  outline-offset: var(--outline-offset-default);
+}

@@ -1,0 +1,25 @@
+# Secrets & personal overrides — never committed
+.claude/settings.local.json
+CLAUDE.local.md
+*.local.*
+.env
+.env.*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Client files (often large binaries)
+project-inputs/*.pdf
+project-inputs/*.docx
+project-inputs/*.xlsx
+project-inputs/*.pptx
+
+# Node / build artifacts (any nested app, e.g. project-outputs/prototype)
+node_modules/
+dist/
+.astro/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*

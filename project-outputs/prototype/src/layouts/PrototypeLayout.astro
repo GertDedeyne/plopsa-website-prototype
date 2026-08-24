@@ -1,0 +1,32 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+
+<BaseLayout title={`${title} — Prototype`}>
+  <div class="proto-shell">
+    <Navigation currentPath={currentPath} />
+    <main class="proto-main">
+      <slot />
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  .proto-shell {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .proto-main {
+    flex: 1;
+  }
+</style>

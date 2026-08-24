@@ -1,0 +1,206 @@
+---
+import StorybookLayout from '../../layouts/StorybookLayout.astro';
+
+const spacingScale = [
+  { token: '--space-1', value: '0.25rem', px: '4px' },
+  { token: '--space-2', value: '0.5rem', px: '8px' },
+  { token: '--space-3', value: '0.75rem', px: '12px' },
+  { token: '--space-4', value: '1rem', px: '16px' },
+  { token: '--space-5', value: '1.25rem', px: '20px' },
+  { token: '--space-6', value: '1.5rem', px: '24px' },
+  { token: '--space-8', value: '2rem', px: '32px' },
+  { token: '--space-10', value: '2.5rem', px: '40px' },
+  { token: '--space-12', value: '3rem', px: '48px' },
+  { token: '--space-16', value: '4rem', px: '64px' },
+  { token: '--space-20', value: '5rem', px: '80px' },
+  { token: '--space-24', value: '6rem', px: '96px' },
+];
+
+const radiusScale = [
+  { token: '--radius-sm', value: '4px' },
+  { token: '--radius-md', value: '8px' },
+  { token: '--radius-lg', value: '12px' },
+  { token: '--radius-xl', value: '16px' },
+  { token: '--radius-full', value: '9999px' },
+];
+
+const shadows = [
+  { token: '--shadow-sm', label: 'Small' },
+  { token: '--shadow-md', label: 'Medium' },
+  { token: '--shadow-lg', label: 'Large' },
+];
+---
+
+<StorybookLayout title="Spacing">
+
+  <section class="spacing-section">
+    <h2 class="section-title">Spacing Scale</h2>
+    <div class="spacing-list">
+      {spacingScale.map((item) => (
+        <div class="spacing-row">
+          <div class="spacing-meta">
+            <code>{item.token}</code>
+            <span class="spacing-value">{item.value} ({item.px})</span>
+          </div>
+          <div class="spacing-bar-container">
+            <div class="spacing-bar" style={`width: var(${item.token});`} />
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+
+  <section class="spacing-section">
+    <h2 class="section-title">Border Radius</h2>
+    <div class="radius-grid">
+      {radiusScale.map((item) => (
+        <div class="radius-card">
+          <div class="radius-sample" style={`border-radius: var(${item.token});`} />
+          <code>{item.token}</code>
+          <span class="spacing-value">{item.value}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+
+  <section class="spacing-section">
+    <h2 class="section-title">Shadows</h2>
+    <div class="shadow-grid">
+      {shadows.map((item) => (
+        <div class="shadow-card">
+          <div class="shadow-sample" style={`box-shadow: var(${item.token});`} />
+          <div class="shadow-info">
+            <strong>{item.label}</strong>
+            <code>{item.token}</code>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+</StorybookLayout>
+
+<style>
+  .spacing-section {
+    margin-bottom: var(--space-10);
+  }
+
+  .section-title {
+    font-size: var(--text-h5);
+    margin-bottom: var(--space-4);
+    color: var(--color-gray-500);
+  }
+
+  .spacing-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .spacing-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-white);
+  }
+
+  .spacing-meta {
+    flex-shrink: 0;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .spacing-meta code {
+    font-size: var(--text-paragraph-xs);
+    color: var(--color-primary-300);
+  }
+
+  .spacing-value {
+    font-size: var(--text-paragraph-xs);
+    color: var(--color-gray-300);
+  }
+
+  .spacing-bar-container {
+    flex: 1;
+  }
+
+  .spacing-bar {
+    height: 24px;
+    background: var(--color-primary-300);
+    border-radius: var(--radius-sm);
+    min-width: 4px;
+  }
+
+  .radius-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--space-4);
+  }
+
+  .radius-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-white);
+  }
+
+  .radius-sample {
+    width: 80px;
+    height: 80px;
+    background: var(--color-primary-300);
+  }
+
+  .radius-card code {
+    font-size: var(--text-paragraph-xs);
+    color: var(--color-primary-300);
+  }
+
+  .shadow-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-6);
+  }
+
+  .shadow-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-white);
+  }
+
+  .shadow-sample {
+    width: 100%;
+    height: 80px;
+    background: var(--color-white);
+    border-radius: var(--radius-md);
+  }
+
+  .shadow-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .shadow-info strong {
+    font-size: var(--text-paragraph-small);
+  }
+
+  .shadow-info code {
+    font-size: var(--text-paragraph-xs);
+    color: var(--color-primary-300);
+  }
+</style>

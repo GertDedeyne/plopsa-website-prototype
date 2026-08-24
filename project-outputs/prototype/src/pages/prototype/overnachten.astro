@@ -1,0 +1,47 @@
+---
+import PrototypeLayout from '../../layouts/PrototypeLayout.astro';
+---
+
+<PrototypeLayout title="Overnachten">
+  <section class="page-hero">
+    <h1>Overnachten</h1>
+    <p>Ontdek onze overnachtingsmogelijkheden en maak er een meerdaags avontuur van.</p>
+  </section>
+</PrototypeLayout>
+
+<style>
+  .page-hero {
+    background: var(--color-secondary-beige-200);
+    color: var(--color-body);
+    padding: var(--space-10) var(--space-4);
+    text-align: center;
+  }
+
+  .page-hero h1 {
+    font-size: 28px;
+    line-height: var(--leading-tight);
+    margin-bottom: var(--space-3);
+    color: var(--color-primary-300);
+  }
+
+  .page-hero p {
+    font-size: var(--text-paragraph-body);
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .page-hero {
+      padding: var(--space-24) var(--space-8);
+    }
+
+    .page-hero h1 {
+      font-size: var(--text-display);
+      margin-bottom: var(--space-4);
+    }
+
+    .page-hero p {
+      font-size: var(--text-paragraph-lead);
+    }
+  }
+</style>
