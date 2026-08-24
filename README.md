@@ -6,7 +6,7 @@ An interactive prototype for the Plopsa website redesign, built with Astro. It i
 ---
 
 
-## 1.0 🛠 Tech Stack
+## Tech Stack
 
 | Layer | Choice |
 |-------|--------|
@@ -22,7 +22,7 @@ An interactive prototype for the Plopsa website redesign, built with Astro. It i
 ---
 
 
-## 2.0 📁 Project Structure
+## Project Structure
 
 ```
 .
@@ -48,7 +48,7 @@ An interactive prototype for the Plopsa website redesign, built with Astro. It i
 ---
 
 
-## 3.0 ⚙️ Setup
+## Setup
 
 **Prerequisite:** Node.js ≥ 22.12.0
 
@@ -61,7 +61,7 @@ npm install
 ---
 
 
-## 4.0 ▶️ Running the Prototype
+## Running the Prototype
 
 | Command | What it does |
 |---------|---------------|
@@ -78,7 +78,7 @@ Once running, the two main areas to explore are:
 ---
 
 
-## 5.0 🎨 Design System Notes
+## Design System Notes
 
 - Design tokens live in `project-inputs/design-tokens.css` and are imported into `src/styles/`, extended with additional spacing/typography scales.
 - Components in `src/components/` (e.g. `Button.astro`, `Icon.astro`, `Navigation.astro`) are shared between the storybook and the prototype pages — changes to a component are reflected everywhere it's used.
