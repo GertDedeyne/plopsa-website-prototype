@@ -1,0 +1,5 @@
+[build]
+  base = "project-outputs/prototype"
+  command = "npm run build"
+  publish = "dist"
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- project-outputs/prototype/"
