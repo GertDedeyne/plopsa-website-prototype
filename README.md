@@ -1,6 +1,6 @@
-# Plopsa Website Redesign — Prototype
+# Plopsa Website Prototype
 
-An interactive prototype for the Plopsa website redesign, built with Astro. It includes a set of prototype pages (homepage, tickets, park info, overnight stays, visit planning, subscriptions) and a built-in "storybook" documenting the design system (colors, typography, spacing, icons, components) that powers them.
+An interactive prototype for the Plopsa website redesign, built with Astro. It includes a set of prototype pages and a built-in "storybook" documenting the design system (colors, typography, spacing, icons, components) that powers them.
 
 
 ---
@@ -71,8 +71,8 @@ npm install
 
 Once running, the two main areas to explore are:
 
-- **`/prototype/*`** — the redesigned pages (homepage, `het-park`, `tickets`, `overnachten`, `plan-je-bezoek`, `abonnementen`)
-- **`/storybook/*`** — the design system reference (colors, typography, spacing, icons, component demos)
+- **`/prototype/*`** - the redesigned pages (homepage, `het-park`, `tickets`, `overnachten`, `plan-je-bezoek`, `abonnementen`)
+- **`/storybook/*`** - the design system reference (colors, typography, spacing, icons, component demos)
 
 
 ---
