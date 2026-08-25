@@ -1,47 +1,49 @@
 ---
 import PrototypeLayout from '../../layouts/PrototypeLayout.astro';
+import BookingBar from '../../components/BookingBar.astro';
 ---
 
 <PrototypeLayout title="Overnachten">
-  <section class="page-hero">
-    <h1>Overnachten</h1>
-    <p>Ontdek onze overnachtingsmogelijkheden en maak er een meerdaags avontuur van.</p>
+  <section class="page-title">
+    <h1>Magisch overnachten</h1>
+  </section>
+
+  <section class="page-booking">
+    <BookingBar guestsValue="2 gasten, 1 kamer" />
   </section>
 </PrototypeLayout>
 
 <style>
-  .page-hero {
-    background: var(--color-secondary-beige-200);
-    color: var(--color-body);
-    padding: var(--space-10) var(--space-4);
-    text-align: center;
+  .page-title {
+    padding: var(--space-6) var(--space-4) var(--space-2);
   }
 
-  .page-hero h1 {
+  .page-title h1 {
     font-size: 28px;
     line-height: var(--leading-tight);
-    margin-bottom: var(--space-3);
     color: var(--color-primary-300);
   }
 
-  .page-hero p {
-    font-size: var(--text-paragraph-body);
-    max-width: 640px;
-    margin: 0 auto;
+  .page-booking {
+    padding: var(--space-4);
   }
 
   @media (min-width: 768px) {
-    .page-hero {
-      padding: var(--space-24) var(--space-8);
+    .page-title {
+      padding: var(--space-8) var(--space-16) 0;
+      max-width: 1440px;
+      margin: 0 auto;
     }
 
-    .page-hero h1 {
-      font-size: var(--text-display);
-      margin-bottom: var(--space-4);
+    .page-title h1 {
+      font-size: var(--text-h1);
+      line-height: var(--leading-tight);
     }
 
-    .page-hero p {
-      font-size: var(--text-paragraph-lead);
+    .page-booking {
+      padding: var(--space-6) var(--space-16);
+      max-width: 1440px;
+      margin: 0 auto;
     }
   }
 </style>

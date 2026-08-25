@@ -11,7 +11,7 @@ const currentPath = Astro.url.pathname;
 
 const navSections = [
   {
-    heading: 'Tokens',
+    heading: 'Atoms',
     items: [
       { label: 'Colors', href: '/storybook/colors' },
       { label: 'Typography', href: '/storybook/typography' },
@@ -20,10 +20,17 @@ const navSections = [
     ],
   },
   {
-    heading: 'Components',
+    heading: 'Molecules',
+    items: [
+      { label: 'Button', href: '/storybook/components/button' },
+      { label: 'Input field', href: '/storybook/components/input-field' },
+    ],
+  },
+  {
+    heading: 'Organisms',
     items: [
       { label: 'Header', href: '/storybook/components/header' },
-      { label: 'Button', href: '/storybook/components/button' },
+      { label: 'Booking bar', href: '/storybook/components/booking-bar' },
     ],
   },
 ];

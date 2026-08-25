@@ -1,0 +1,496 @@
+---
+interface SpecialDate {
+  date: string;
+  label: string;
+  color: string;
+}
+
+interface Props {
+  id: string;
+  specialDates?: SpecialDate[];
+  class?: string;
+}
+
+const { id, specialDates = [], class: className } = Astro.props;
+
+const legend = [...new Map(specialDates.map((entry) => [entry.label, entry])).values()];
+---
+
+<div class:list={['date-range-picker', className]} id={id} data-special-dates={JSON.stringify(specialDates)}>
+  {legend.length > 0 && (
+    <div class="drp-legend">
+      {legend.map((entry) => (
+        <span class="drp-legend-item">
+          <span class="drp-legend-dot" style={`background:${entry.color}`}></span>
+          {entry.label}
+        </span>
+      ))}
+    </div>
+  )}
+
+  <div class="drp-months" data-months-container></div>
+</div>
+
+<script>
+  const WEEKDAY_HEADERS = ['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'];
+  const WEEKDAY_ABBR = ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'];
+  const MONTH_ABBR = ['jan.', 'feb.', 'mrt.', 'apr.', 'mei', 'jun.', 'jul.', 'aug.', 'sep.', 'okt.', 'nov.', 'dec.'];
+  const MONTH_NAMES = [
+    'januari', 'februari', 'maart', 'april', 'mei', 'juni',
+    'juli', 'augustus', 'september', 'oktober', 'november', 'december',
+  ];
+  const MOBILE_QUERY = '(max-width: 767px)';
+
+  function toISO(date) {
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  }
+
+  function startOfDay(date) {
+    const copy = new Date(date);
+    copy.setHours(0, 0, 0, 0);
+    return copy;
+  }
+
+  function isSameDay(a, b) {
+    return !!a && !!b
+      && a.getFullYear() === b.getFullYear()
+      && a.getMonth() === b.getMonth()
+      && a.getDate() === b.getDate();
+  }
+
+  function formatRange(start, end) {
+    const label = (date) => `${WEEKDAY_ABBR[date.getDay()]} ${date.getDate()} ${MONTH_ABBR[date.getMonth()]}`;
+    return `${label(start)} - ${label(end)}`;
+  }
+
+  function setupDateRangePicker(root) {
+    const cidAttr = Array.from(root.attributes).find((attr) => attr.name.startsWith('data-astro-cid-'));
+
+    function createEl(tag, className) {
+      const el = document.createElement(tag);
+      if (className) el.className = className;
+      if (cidAttr) el.setAttribute(cidAttr.name, cidAttr.value);
+      return el;
+    }
+
+    const monthsContainer = root.querySelector('[data-months-container]');
+    const specialDates = JSON.parse(root.dataset.specialDates || '[]');
+    const specialByDate = new Map(specialDates.map((entry) => [entry.date, entry]));
+
+    const today = startOfDay(new Date());
+    let viewYear = today.getFullYear();
+    let viewMonth = today.getMonth();
+    let rangeStart = null;
+    let rangeEnd = null;
+
+    function isMobile() {
+      return window.matchMedia(MOBILE_QUERY).matches;
+    }
+
+    function shiftMonth(delta) {
+      viewMonth += delta;
+      if (viewMonth < 0) {
+        viewMonth = 11;
+        viewYear -= 1;
+      } else if (viewMonth > 11) {
+        viewMonth = 0;
+        viewYear += 1;
+      }
+      render();
+    }
+
+    function handleDayClick(date) {
+      if (!rangeStart || (rangeStart && rangeEnd)) {
+        rangeStart = date;
+        rangeEnd = null;
+        render();
+        return;
+      }
+
+      if (isSameDay(date, rangeStart)) return;
+
+      if (date < rangeStart) {
+        rangeStart = date;
+        rangeEnd = null;
+        render();
+        return;
+      }
+
+      rangeEnd = date;
+      render();
+
+      root.dispatchEvent(new CustomEvent('daterange:select', {
+        bubbles: true,
+        detail: {
+          start: toISO(rangeStart),
+          end: toISO(rangeEnd),
+          formatted: formatRange(rangeStart, rangeEnd),
+        },
+      }));
+
+      root.classList.remove('is-open');
+    }
+
+    function buildMonth(year, month, { showPrev, showNext }) {
+      const monthEl = createEl('div', 'drp-month');
+
+      const header = createEl('div', 'drp-month-header');
+
+      if (showPrev) {
+        const prevBtn = createEl('button', 'drp-nav drp-nav--prev');
+        prevBtn.type = 'button';
+        prevBtn.setAttribute('aria-label', 'Vorige maand');
+        prevBtn.innerHTML = '<svg class="icon" width="24" height="24" aria-hidden="true"><use href="/icons.svg#medium-caret-left-light"></use></svg>';
+        prevBtn.addEventListener('click', () => shiftMonth(-1));
+        header.appendChild(prevBtn);
+      }
+
+      const title = createEl('p', 'drp-month-title');
+      title.textContent = `${MONTH_NAMES[month][0].toUpperCase()}${MONTH_NAMES[month].slice(1)} ${year}`;
+      header.appendChild(title);
+
+      if (showNext) {
+        const nextBtn = createEl('button', 'drp-nav drp-nav--next');
+        nextBtn.type = 'button';
+        nextBtn.setAttribute('aria-label', 'Volgende maand');
+        nextBtn.innerHTML = '<svg class="icon" width="24" height="24" aria-hidden="true"><use href="/icons.svg#medium-caret-right-light"></use></svg>';
+        nextBtn.addEventListener('click', () => shiftMonth(1));
+        header.appendChild(nextBtn);
+      }
+
+      monthEl.appendChild(header);
+
+      const weekdayRow = createEl('div', 'drp-weekdays');
+      WEEKDAY_HEADERS.forEach((label) => {
+        const cell = createEl('span', 'drp-weekday');
+        cell.textContent = label;
+        weekdayRow.appendChild(cell);
+      });
+      monthEl.appendChild(weekdayRow);
+
+      const grid = createEl('div', 'drp-grid');
+
+      const firstOfMonth = new Date(year, month, 1);
+      const leadingBlanks = (firstOfMonth.getDay() + 6) % 7;
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const totalCells = Math.ceil((leadingBlanks + daysInMonth) / 7) * 7;
+
+      for (let cellIndex = 0; cellIndex < totalCells; cellIndex += 1) {
+        const dayNumber = cellIndex - leadingBlanks + 1;
+
+        if (dayNumber < 1 || dayNumber > daysInMonth) {
+          const blank = createEl('span', 'drp-day drp-day--blank');
+          grid.appendChild(blank);
+          continue;
+        }
+
+        const date = new Date(year, month, dayNumber);
+        const iso = toISO(date);
+        const isPast = date < today;
+        const isStart = isSameDay(date, rangeStart);
+        const isEnd = isSameDay(date, rangeEnd);
+        const isInRange = !!rangeStart && !!rangeEnd && date > rangeStart && date < rangeEnd;
+        const special = specialByDate.get(iso);
+
+        const dayButton = createEl('button', 'drp-day');
+        dayButton.type = 'button';
+        if (isStart || isEnd) dayButton.classList.add('drp-day--selected');
+        if (isInRange) dayButton.classList.add('drp-day--in-range');
+        if (isPast) {
+          dayButton.classList.add('drp-day--disabled');
+          dayButton.disabled = true;
+        }
+        dayButton.dataset.date = iso;
+        dayButton.setAttribute(
+          'aria-label',
+          date.toLocaleDateString('nl-BE', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }),
+        );
+        if (isStart || isEnd) dayButton.setAttribute('aria-pressed', 'true');
+
+        const numberEl = createEl('span', 'drp-day-number');
+        numberEl.textContent = String(dayNumber);
+        dayButton.appendChild(numberEl);
+
+        if (special) {
+          const dot = createEl('span', 'drp-day-dot');
+          dot.style.background = special.color;
+          dayButton.appendChild(dot);
+        }
+
+        dayButton.addEventListener('click', () => handleDayClick(date));
+
+        grid.appendChild(dayButton);
+      }
+
+      monthEl.appendChild(grid);
+      return monthEl;
+    }
+
+    function addRangeBars() {
+      if (!rangeStart || !rangeEnd) return;
+
+      monthsContainer.querySelectorAll('.drp-grid').forEach((grid) => {
+        const cells = Array.from(grid.children);
+        for (let rowStart = 0; rowStart < cells.length; rowStart += 7) {
+          const row = cells.slice(rowStart, rowStart + 7);
+          const highlighted = row.filter(
+            (cell) => cell.classList.contains('drp-day--selected') || cell.classList.contains('drp-day--in-range'),
+          );
+          if (highlighted.length === 0) continue;
+
+          const first = highlighted[0];
+          const last = highlighted[highlighted.length - 1];
+          const gridRect = grid.getBoundingClientRect();
+          const firstRect = first.getBoundingClientRect();
+          const lastRect = last.getBoundingClientRect();
+
+          const bar = createEl('span', 'drp-range-bar');
+          bar.style.top = `${firstRect.top - gridRect.top}px`;
+          bar.style.left = `${firstRect.left - gridRect.left}px`;
+          bar.style.width = `${lastRect.right - firstRect.left}px`;
+          bar.style.height = `${firstRect.height}px`;
+          grid.prepend(bar);
+        }
+      });
+    }
+
+    function render() {
+      monthsContainer.innerHTML = '';
+      const count = isMobile() ? 1 : 2;
+      monthsContainer.classList.toggle('drp-months--single', count === 1);
+
+      for (let i = 0; i < count; i += 1) {
+        let year = viewYear;
+        let month = viewMonth + i;
+        if (month > 11) {
+          month -= 12;
+          year += 1;
+        }
+
+        monthsContainer.appendChild(buildMonth(year, month, { showPrev: i === 0, showNext: i === count - 1 }));
+
+        if (count === 2 && i === 0) {
+          monthsContainer.appendChild(createEl('div', 'drp-divider'));
+        }
+      }
+
+      addRangeBars();
+    }
+
+    render();
+    window.matchMedia(MOBILE_QUERY).addEventListener('change', render);
+  }
+
+  document.querySelectorAll('.date-range-picker').forEach(setupDateRangePicker);
+</script>
+
+<style>
+  .date-range-picker {
+    display: none;
+    position: absolute;
+    top: calc(100% + var(--space-2));
+    left: 0;
+    z-index: 20;
+    flex-direction: column;
+    gap: var(--space-4);
+    min-width: 320px;
+    padding: var(--space-4);
+    background: var(--color-white);
+    border: 1px solid var(--color-neutral-400);
+    border-radius: var(--radius-md);
+    box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.1);
+  }
+
+  .date-range-picker.is-open {
+    display: flex;
+  }
+
+  .drp-legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-1) var(--space-3);
+  }
+
+  .drp-legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-paragraph-body);
+    line-height: var(--leading-normal);
+    color: var(--color-body);
+    white-space: nowrap;
+  }
+
+  .drp-legend-dot {
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+  }
+
+  .drp-months {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+
+  .drp-divider {
+    align-self: stretch;
+    width: 1px;
+    background: var(--color-neutral-300);
+  }
+
+  .drp-month {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    width: 100%;
+  }
+
+  .drp-month-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .drp-month-title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--text-h6);
+    line-height: var(--leading-normal);
+    text-align: center;
+    color: var(--color-body);
+  }
+
+  .drp-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-body);
+  }
+
+  .drp-nav--prev {
+    left: 0;
+  }
+
+  .drp-nav--next {
+    right: 0;
+  }
+
+  .drp-weekdays,
+  .drp-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 32px);
+    justify-content: space-between;
+  }
+
+  .drp-weekdays {
+    column-gap: var(--space-4);
+  }
+
+  .drp-grid {
+    position: relative;
+    column-gap: var(--space-4);
+    row-gap: var(--space-2);
+  }
+
+  .drp-range-bar {
+    position: absolute;
+    z-index: 0;
+    background: var(--color-secondary-beige-300);
+    border-radius: var(--radius-full);
+    pointer-events: none;
+  }
+
+  .drp-weekday {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    font-family: var(--font-heading);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--text-paragraph-body);
+    color: var(--color-body);
+  }
+
+  .drp-day {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: none;
+    border: none;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    font-family: var(--font-heading);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--text-paragraph-body);
+    color: var(--color-body);
+  }
+
+  .drp-day:hover:not(.drp-day--disabled):not(.drp-day--selected) {
+    background: var(--color-neutral-100);
+  }
+
+  .drp-day--blank {
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .drp-day--selected {
+    background: var(--color-primary-300);
+    color: var(--color-white);
+  }
+
+  .drp-day--disabled {
+    color: var(--color-neutral-400);
+    cursor: not-allowed;
+  }
+
+  .drp-day-dot {
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+  }
+
+  /* -- Mobile: inline, not an overlay -- */
+
+  @media (max-width: 767px) {
+    .date-range-picker {
+      position: static;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .drp-weekdays,
+    .drp-grid {
+      grid-template-columns: repeat(7, 1fr);
+      column-gap: var(--space-1);
+    }
+
+    .drp-weekday,
+    .drp-day {
+      width: auto;
+      aspect-ratio: 1;
+    }
+  }
+</style>

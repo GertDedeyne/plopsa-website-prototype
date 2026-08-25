@@ -1,0 +1,72 @@
+---
+import StorybookLayout from '../../../layouts/StorybookLayout.astro';
+import InputField from '../../../components/InputField.astro';
+import Icon from '../../../components/Icon.astro';
+---
+
+<StorybookLayout title="Input field">
+
+  <section class="comp-section">
+    <h2 class="section-title">Default</h2>
+    <p class="section-desc">Click into the field — the label floats up and scales down. It stays floated once a value is entered, even after blur.</p>
+    <div class="comp-row">
+      <div class="comp-demo">
+        <InputField id="input-default" label="Label" required helperText="Helper text">
+          <Icon name="medium-eye" size={24} slot="icon" />
+        </InputField>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="comp-section">
+    <h2 class="section-title">Disabled</h2>
+    <p class="section-desc">Non-interactive. Shown here pre-filled, so the label sits in its floated position.</p>
+    <div class="comp-row">
+      <div class="comp-demo">
+        <InputField id="input-disabled" label="Label" required value="Input text" helperText="Helper text" disabled>
+          <Icon name="medium-eye" size={24} slot="icon" />
+        </InputField>
+      </div>
+    </div>
+  </section>
+
+</StorybookLayout>
+
+<style>
+  .comp-section {
+    margin-bottom: var(--space-8);
+  }
+
+  .section-title {
+    font-size: var(--text-h5);
+    margin-bottom: var(--space-2);
+    color: var(--color-gray-500);
+  }
+
+  .section-desc {
+    font-size: var(--text-paragraph-small);
+    color: var(--color-gray-300);
+    margin-bottom: var(--space-4);
+    max-width: 480px;
+  }
+
+  .comp-row {
+    margin-bottom: var(--space-4);
+  }
+
+  .comp-demo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-white);
+  }
+
+  .comp-demo :global(.field) {
+    max-width: 320px;
+  }
+</style>

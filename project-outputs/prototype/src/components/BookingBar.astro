@@ -1,0 +1,303 @@
+---
+import InputField from './InputField.astro';
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+import DateRangePicker from './DateRangePicker.astro';
+
+interface SpecialDate {
+  date: string;
+  label: string;
+  color: string;
+}
+
+interface Props {
+  id?: string;
+  dateLabel?: string;
+  dateValue?: string;
+  guestsLabel?: string;
+  guestsValue?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  alertTitle?: string;
+  alertDescription?: string;
+  specialDates?: SpecialDate[];
+  class?: string;
+}
+
+const {
+  id = 'booking-bar',
+  dateLabel = 'Aankomst- en vertrekdatum',
+  dateValue,
+  guestsLabel = 'Aantal gasten en kamers',
+  guestsValue,
+  ctaLabel = 'Toon beschikbaarheid',
+  ctaHref,
+  alertTitle,
+  alertDescription,
+  specialDates = [],
+  class: className,
+} = Astro.props;
+---
+
+<div class:list={['booking-bar', className]} id={id} data-state="active">
+  <div class="booking-bar-main">
+    <div class="booking-bar-field booking-bar-field--date">
+      <InputField id={`${id}-date`} label={dateLabel} value={dateValue} required readonly>
+        <Icon name="medium-calendar-blank" size={24} slot="icon" />
+      </InputField>
+
+      <DateRangePicker id={`${id}-date-picker`} specialDates={specialDates} />
+    </div>
+
+    <div class="booking-bar-field">
+      <InputField id={`${id}-guests`} label={guestsLabel} value={guestsValue} required>
+        <Icon name="medium-sleep" size={24} slot="icon" />
+      </InputField>
+    </div>
+
+    <Button color="purple" size="lg" href={ctaHref} class="booking-bar-cta">
+      {ctaLabel}
+    </Button>
+  </div>
+
+  <div class="booking-bar-compact">
+    <div class="booking-bar-compact-summary">
+      <p class="booking-bar-compact-row booking-bar-compact-row--strong">
+        <Icon name="medium-calendar-blank" size={24} />
+        <span class="booking-bar-compact-date-text">{dateValue || dateLabel}</span>
+      </p>
+      <p class="booking-bar-compact-row">
+        <Icon name="medium-sleep" size={24} />
+        <span>{guestsValue || guestsLabel}</span>
+      </p>
+    </div>
+
+    <button type="button" class="booking-bar-compact-edit">Wijzigen</button>
+  </div>
+
+  {alertTitle && (
+    <div class="booking-bar-alert">
+      <Icon name="medium-warning" size={24} class="booking-bar-alert-icon" />
+      <div class="booking-bar-alert-content">
+        <p class="booking-bar-alert-title">{alertTitle}</p>
+        {alertDescription && <p class="booking-bar-alert-description">{alertDescription}</p>}
+      </div>
+    </div>
+  )}
+</div>
+
+<script>
+  const MOBILE_QUERY = '(max-width: 767px)';
+
+  function setupBookingBar(root: HTMLElement) {
+    const cta = root.querySelector<HTMLElement>('.booking-bar-cta');
+    const editButton = root.querySelector<HTMLElement>('.booking-bar-compact-edit');
+    const dateField = root.querySelector<HTMLElement>('.booking-bar-field--date');
+    const dateInput = dateField?.querySelector<HTMLInputElement>('input');
+    const datePicker = dateField?.querySelector<HTMLElement>('.date-range-picker');
+    const compactDateText = root.querySelector<HTMLElement>('.booking-bar-compact-date-text');
+
+    function openDatePicker() {
+      datePicker?.classList.add('is-open');
+    }
+
+    function closeDatePicker() {
+      datePicker?.classList.remove('is-open');
+    }
+
+    dateInput?.addEventListener('click', openDatePicker);
+    dateInput?.addEventListener('focus', openDatePicker);
+
+    datePicker?.addEventListener('daterange:select', (event) => {
+      const detail = (event as CustomEvent<{ start: string; end: string; formatted: string }>).detail;
+      if (dateInput) dateInput.value = detail.formatted;
+      closeDatePicker();
+    });
+
+    document.addEventListener('click', (event) => {
+      if (dateField && !event.composedPath().includes(dateField)) closeDatePicker();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeDatePicker();
+    });
+
+    cta?.addEventListener('click', (event) => {
+      if (!window.matchMedia(MOBILE_QUERY).matches) return;
+
+      const dateValue = dateInput?.value.trim();
+      if (!dateValue) return;
+
+      event.preventDefault();
+      if (compactDateText) compactDateText.textContent = dateValue;
+      root.dataset.state = 'compact';
+    });
+
+    editButton?.addEventListener('click', (event) => {
+      event.preventDefault();
+      root.dataset.state = 'active';
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>('.booking-bar').forEach(setupBookingBar);
+
+  window.matchMedia(MOBILE_QUERY).addEventListener('change', (event) => {
+    if (event.matches) return;
+    document.querySelectorAll<HTMLElement>('.booking-bar').forEach((root) => {
+      root.dataset.state = 'active';
+    });
+  });
+</script>
+
+<style>
+  .booking-bar {
+    background: var(--color-secondary-beige-200);
+    border: 1px solid var(--color-secondary-beige-300);
+    border-radius: var(--radius-md);
+  }
+
+  .booking-bar-main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-4);
+  }
+
+  .booking-bar-field {
+    width: 100%;
+  }
+
+  .booking-bar-field--date {
+    position: relative;
+  }
+
+  .booking-bar :global(.booking-bar-cta) {
+    width: 100%;
+    text-transform: none;
+  }
+
+  /* -- Compact summary (mobile only) -- */
+
+  .booking-bar-compact {
+    display: none;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    width: 100%;
+  }
+
+  .booking-bar[data-state='compact'] .booking-bar-main {
+    display: none;
+  }
+
+  .booking-bar[data-state='compact'] .booking-bar-compact {
+    display: flex;
+  }
+
+  .booking-bar-compact-summary {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    flex: 1;
+    min-width: 0;
+  }
+
+  .booking-bar-compact-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-paragraph-body);
+    line-height: var(--leading-normal);
+    color: var(--color-body);
+  }
+
+  .booking-bar-compact-row span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .booking-bar-compact-row--strong {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .booking-bar-compact-edit {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: var(--color-primary-300);
+    font-size: var(--text-paragraph-body);
+    line-height: var(--leading-normal);
+    text-decoration: underline;
+    white-space: nowrap;
+  }
+
+  /* -- Alert -- */
+
+  .booking-bar-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    background: rgba(238, 61, 5, 0.15);
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+  }
+
+  .booking-bar-alert-icon {
+    flex-shrink: 0;
+    color: var(--color-primary-orange-300);
+  }
+
+  .booking-bar-alert-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .booking-bar-alert-title {
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--text-paragraph-small);
+    line-height: var(--leading-normal);
+    color: var(--color-body);
+  }
+
+  .booking-bar-alert-description {
+    font-size: var(--text-paragraph-small);
+    line-height: var(--leading-normal);
+    color: var(--color-body);
+  }
+
+  /* -- Desktop -- */
+
+  @media (min-width: 768px) {
+    .booking-bar-main {
+      flex-direction: row;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-6);
+    }
+
+    .booking-bar-field {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .booking-bar :global(.booking-bar-cta) {
+      width: auto;
+      flex-shrink: 0;
+    }
+
+    .booking-bar[data-state='compact'] .booking-bar-main {
+      display: flex;
+    }
+
+    .booking-bar[data-state='compact'] .booking-bar-compact {
+      display: none;
+    }
+  }
+</style>

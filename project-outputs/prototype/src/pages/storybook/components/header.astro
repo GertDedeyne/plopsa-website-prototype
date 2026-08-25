@@ -18,73 +18,11 @@ import Navigation from '../../../components/Navigation.astro';
     <h2 class="section-title">Mobile</h2>
     <p class="section-desc">Compact header with logo, search icon, tickets icon, and hamburger menu. Below 768px.</p>
     <div class="comp-demo comp-demo--mobile">
-      <Navigation currentPath="/prototype/tickets" />
+      <iframe class="comp-demo-frame" src="/storybook/preview/header" title="Header — mobile preview" loading="lazy"></iframe>
     </div>
   </section>
 
 
-  <section class="comp-section">
-    <h2 class="section-title">Props</h2>
-    <table class="props-table">
-      <thead>
-        <tr>
-          <th>Prop</th>
-          <th>Type</th>
-          <th>Default</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code>currentPath</code></td>
-          <td><code>string</code></td>
-          <td>—</td>
-          <td>Current route path, used to highlight the active nav item</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
-
-
-  <section class="comp-section">
-    <h2 class="section-title">Anatomy</h2>
-    <table class="props-table">
-      <thead>
-        <tr>
-          <th>Element</th>
-          <th>Desktop</th>
-          <th>Mobile</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Logo</td>
-          <td>338px wide</td>
-          <td>159px wide</td>
-        </tr>
-        <tr>
-          <td>Nav items</td>
-          <td>Horizontal, 18px Semibold, 120px min-height</td>
-          <td>Hidden behind hamburger menu</td>
-        </tr>
-        <tr>
-          <td>Search button</td>
-          <td>56px circle, bordered</td>
-          <td>44px circle, bordered</td>
-        </tr>
-        <tr>
-          <td>Tickets CTA</td>
-          <td>Red gradient Button (large)</td>
-          <td>44px red gradient circle with ticket icon</td>
-        </tr>
-        <tr>
-          <td>Hamburger</td>
-          <td>Hidden</td>
-          <td>44px, menu icon</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
 
 </StorybookLayout>
 
@@ -120,37 +58,10 @@ import Navigation from '../../../components/Navigation.astro';
     max-width: 375px;
   }
 
-  .props-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: var(--color-white);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    font-size: var(--text-paragraph-small);
-  }
-
-  .props-table th,
-  .props-table td {
-    text-align: left;
-    padding: var(--space-3) var(--space-4);
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .props-table th {
-    background: var(--color-gray-100);
-    font-weight: var(--font-weight-semibold);
-    font-size: var(--text-paragraph-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-gray-400);
-  }
-
-  .props-table code {
-    font-size: var(--text-paragraph-xs);
-    background: var(--color-gray-100);
-    padding: 2px 6px;
-    border-radius: var(--radius-sm);
-    color: var(--color-primary-300);
+  .comp-demo-frame {
+    display: block;
+    width: 375px;
+    height: 230px;
+    border: none;
   }
 </style>

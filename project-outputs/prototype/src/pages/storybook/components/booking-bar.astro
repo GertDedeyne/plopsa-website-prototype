@@ -1,0 +1,67 @@
+---
+import StorybookLayout from '../../../layouts/StorybookLayout.astro';
+import BookingBar from '../../../components/BookingBar.astro';
+
+const SPECIAL_DATES = [
+  { date: '2026-06-01', label: 'Beste deal', color: '#6ebd3c' },
+  { date: '2026-06-02', label: 'Beste deal', color: '#6ebd3c' },
+  { date: '2026-06-05', label: 'Grand opening', color: '#a1477f' },
+  { date: '2026-06-06', label: 'Grand opening', color: '#a1477f' },
+  { date: '2026-06-06', label: 'Kaboutercarnaval', color: '#ee3d05' },
+  { date: '2026-06-24', label: 'Kaboutercarnaval', color: '#ee3d05' },
+  { date: '2026-06-25', label: 'Kaboutercarnaval', color: '#ee3d05' },
+  { date: '2026-06-26', label: 'Kaboutercarnaval', color: '#ee3d05' },
+];
+---
+
+<StorybookLayout title="Booking bar">
+
+  <section class="comp-section">
+    <h2 class="section-title">Default</h2>
+    <p class="section-desc">Click the date field to open the range picker. Selecting a range closes it and fills the field — the guests field is still a placeholder.</p>
+    <div class="comp-demo">
+      <BookingBar id="booking-bar-default" specialDates={SPECIAL_DATES} />
+    </div>
+  </section>
+
+
+  <section class="comp-section">
+    <h2 class="section-title">With closure notice</h2>
+    <p class="section-desc">Shown when the selected date range overlaps a day the park is closed.</p>
+    <div class="comp-demo">
+      <BookingBar
+        id="booking-bar-closure"
+        guestsValue="2 gasten, 1 kamers"
+        alertTitle="Plopsaland Deutsland is niet elke dag geopend tijdens jouw bezoek"
+        alertDescription="Gesloten op za 19 ju. 2026, zo 21 jun. 2026"
+      />
+    </div>
+  </section>
+
+</StorybookLayout>
+
+<style>
+  .comp-section {
+    margin-bottom: var(--space-8);
+  }
+
+  .section-title {
+    font-size: var(--text-h5);
+    margin-bottom: var(--space-2);
+    color: var(--color-gray-500);
+  }
+
+  .section-desc {
+    font-size: var(--text-paragraph-small);
+    color: var(--color-gray-300);
+    margin-bottom: var(--space-4);
+    max-width: 560px;
+  }
+
+  .comp-demo {
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-white);
+  }
+</style>
