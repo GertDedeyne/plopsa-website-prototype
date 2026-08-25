@@ -1,6 +1,17 @@
 ---
 import PrototypeLayout from '../../layouts/PrototypeLayout.astro';
 import BookingBar from '../../components/BookingBar.astro';
+
+const SPECIAL_DATES = [
+  { date: '2026-06-01', label: 'Beste deal', color: '#6ebd3c' },
+  { date: '2026-06-02', label: 'Beste deal', color: '#6ebd3c' },
+  { date: '2026-06-05', label: 'Grand opening', color: '#a1477f' },
+  { date: '2026-06-06', label: 'Grand opening', color: '#a1477f' },
+  { date: '2026-06-06', label: 'Kaboutercarnaval', color: '#ee3d05' },
+  { date: '2026-06-24', label: 'Kaboutercarnaval', color: '#ee3d05' },
+  { date: '2026-06-25', label: 'Kaboutercarnaval', color: '#ee3d05' },
+  { date: '2026-06-26', label: 'Kaboutercarnaval', color: '#ee3d05' },
+];
 ---
 
 <PrototypeLayout title="Overnachten">
@@ -9,7 +20,7 @@ import BookingBar from '../../components/BookingBar.astro';
   </section>
 
   <section class="page-booking">
-    <BookingBar guestsValue="2 gasten, 1 kamer" />
+    <BookingBar id="booking-bar-overnachten" guestsValue="2 gasten, 1 kamer" specialDates={SPECIAL_DATES} />
   </section>
 </PrototypeLayout>
 

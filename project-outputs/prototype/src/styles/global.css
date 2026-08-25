@@ -26,16 +26,8 @@
 
 @font-face {
   font-family: 'Ubuntu';
-  src: url('/fonts/ubuntu-regular-webfont.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Ubuntu';
-  src: url('/fonts/ubuntu-bold-webfont.woff2') format('woff2');
-  font-weight: 700;
+  src: url('/fonts/ubuntu-medium-webfont.woff2') format('woff2');
+  font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
@@ -67,20 +59,21 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0;
 }
 
-h1 { font-size: 30px; line-height: var(--leading-tight); }
-h2 { font-size: 28px; line-height: var(--leading-normal); }
-h3 { font-size: 24px; line-height: var(--leading-normal); }
+h1 { font-size: 30px; line-height: var(--leading-tight); letter-spacing: -2px; }
+h2 { font-size: 28px; line-height: var(--leading-normal); letter-spacing: -1px; }
+h3 { font-size: 24px; line-height: var(--leading-normal); letter-spacing: -0.5px; }
 h4 { font-size: 22px; line-height: var(--leading-normal); }
 h5 { font-size: 20px; line-height: var(--leading-normal); }
 h6 { font-size: 18px; line-height: var(--leading-normal); }
 
 @media (min-width: 768px) {
-  h1 { font-size: var(--text-h1); line-height: var(--leading-tight); }
-  h2 { font-size: var(--text-h2); line-height: var(--leading-normal); }
-  h3 { font-size: var(--text-h3); line-height: var(--leading-normal); }
+  h1 { font-size: var(--text-h1); line-height: var(--leading-tight); letter-spacing: -2px; }
+  h2 { font-size: var(--text-h2); line-height: var(--leading-normal); letter-spacing: -1px; }
+  h3 { font-size: var(--text-h3); line-height: var(--leading-normal); letter-spacing: -0.5px; }
   h4 { font-size: var(--text-h4); line-height: var(--leading-normal); }
   h5 { font-size: var(--text-h5); line-height: var(--leading-normal); }
   h6 { font-size: var(--text-h6); line-height: var(--leading-normal); }

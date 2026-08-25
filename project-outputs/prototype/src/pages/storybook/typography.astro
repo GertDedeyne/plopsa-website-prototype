@@ -3,22 +3,22 @@ import StorybookLayout from '../../layouts/StorybookLayout.astro';
 
 const headingStyles = {
   desktop: [
-    { name: 'Display',    family: 'Ubuntu', size: '64px', weight: 700, lineHeight: '125%' },
-    { name: 'Heading H1', family: 'Ubuntu', size: '40px', weight: 700, lineHeight: '125%' },
-    { name: 'Heading H2', family: 'Ubuntu', size: '34px', weight: 700, lineHeight: '150%' },
-    { name: 'Heading H3', family: 'Ubuntu', size: '28px', weight: 700, lineHeight: '150%' },
-    { name: 'Heading H4', family: 'Ubuntu', size: '24px', weight: 700, lineHeight: '150%' },
-    { name: 'Heading H5', family: 'Ubuntu', size: '22px', weight: 700, lineHeight: '150%' },
-    { name: 'Heading H6', family: 'Ubuntu', size: '18px', weight: 700, lineHeight: '150%' },
+    { name: 'Display',    family: 'Ubuntu', size: '64px', weight: 500, lineHeight: '125%', letterSpacing: '-2px' },
+    { name: 'Heading H1', family: 'Ubuntu', size: '40px', weight: 500, lineHeight: '125%', letterSpacing: '-2px' },
+    { name: 'Heading H2', family: 'Ubuntu', size: '34px', weight: 500, lineHeight: '150%', letterSpacing: '-1px' },
+    { name: 'Heading H3', family: 'Ubuntu', size: '28px', weight: 500, lineHeight: '150%', letterSpacing: '-0.5px' },
+    { name: 'Heading H4', family: 'Ubuntu', size: '24px', weight: 500, lineHeight: '150%', letterSpacing: '0' },
+    { name: 'Heading H5', family: 'Ubuntu', size: '22px', weight: 500, lineHeight: '150%', letterSpacing: '0' },
+    { name: 'Heading H6', family: 'Ubuntu', size: '18px', weight: 500, lineHeight: '150%', letterSpacing: '0' },
   ],
   mobile: [
-    { name: 'Display',    family: 'Ubuntu', size: '32px', weight: 700, lineHeight: '125%' },
-    { name: 'Heading H1', family: 'Ubuntu', size: '30px', weight: 700, lineHeight: '125%' },
-    { name: 'Heading H2', family: 'Ubuntu', size: '28px', weight: 700, lineHeight: '150%' },
-    { name: 'Heading H3', family: 'Ubuntu', size: '24px', weight: 700, lineHeight: '150%' },
-    { name: 'Heading H4', family: 'Ubuntu', size: '22px', weight: 700, lineHeight: '150%' },
-    { name: 'Heading H5', family: 'Ubuntu', size: '20px', weight: 700, lineHeight: '150%' },
-    { name: 'Heading H6', family: 'Ubuntu', size: '18px', weight: 700, lineHeight: '150%' },
+    { name: 'Display',    family: 'Ubuntu', size: '32px', weight: 500, lineHeight: '125%', letterSpacing: '-2px' },
+    { name: 'Heading H1', family: 'Ubuntu', size: '30px', weight: 500, lineHeight: '125%', letterSpacing: '-2px' },
+    { name: 'Heading H2', family: 'Ubuntu', size: '28px', weight: 500, lineHeight: '150%', letterSpacing: '-1px' },
+    { name: 'Heading H3', family: 'Ubuntu', size: '24px', weight: 500, lineHeight: '150%', letterSpacing: '-0.5px' },
+    { name: 'Heading H4', family: 'Ubuntu', size: '22px', weight: 500, lineHeight: '150%', letterSpacing: '0' },
+    { name: 'Heading H5', family: 'Ubuntu', size: '20px', weight: 500, lineHeight: '150%', letterSpacing: '0' },
+    { name: 'Heading H6', family: 'Ubuntu', size: '18px', weight: 500, lineHeight: '150%', letterSpacing: '0' },
   ],
 };
 
@@ -31,13 +31,13 @@ const paragraphStyles = [
 
 const utilityStyles = {
   desktop: [
-    { name: 'Button',      family: 'Ubuntu', size: '18px', weight: 600, lineHeight: '100%', transform: 'none' },
-    { name: 'Button CAPS', family: 'Ubuntu', size: '18px', weight: 600, lineHeight: '100%', transform: 'uppercase' },
-    { name: 'URL',         family: 'Metropolis',   size: '16px', weight: 700, lineHeight: '150%', decoration: 'underline' },
+    { name: 'Button',      family: 'Ubuntu', size: '18px', weight: 500, lineHeight: '100%', transform: 'none' },
+    { name: 'Button CAPS', family: 'Ubuntu', size: '18px', weight: 500, lineHeight: '100%', transform: 'uppercase' },
+    { name: 'URL',         family: 'Metropolis',   size: '16px', weight: 600, lineHeight: '150%', decoration: 'underline' },
   ],
   mobile: [
-    { name: 'Button',      family: 'Ubuntu', size: '16px', weight: 600, lineHeight: '100%', transform: 'none' },
-    { name: 'URL',         family: 'Metropolis',   size: '16px', weight: 700, lineHeight: '150%', decoration: 'underline' },
+    { name: 'Button',      family: 'Ubuntu', size: '16px', weight: 500, lineHeight: '100%', transform: 'none' },
+    { name: 'URL',         family: 'Metropolis',   size: '16px', weight: 600, lineHeight: '150%', decoration: 'underline' },
   ],
 };
 
@@ -88,11 +88,12 @@ const sampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nun
               <span>font-size: {style.size}</span>
               <span>font-weight: {style.weight}</span>
               <span>line-height: {style.lineHeight}</span>
+              <span>letter-spacing: {style.letterSpacing}</span>
             </div>
           </div>
           <p
             class="style-specimen"
-            style={`font-family: var(--font-heading); font-size: ${style.size}; font-weight: ${style.weight}; line-height: ${parseInt(style.lineHeight) / 100};`}
+            style={`font-family: var(--font-heading); font-size: ${style.size}; font-weight: ${style.weight}; line-height: ${parseInt(style.lineHeight) / 100}; letter-spacing: ${style.letterSpacing};`}
           >
             {sampleText}
           </p>
@@ -114,11 +115,12 @@ const sampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nun
               <span>font-size: {style.size}</span>
               <span>font-weight: {style.weight}</span>
               <span>line-height: {style.lineHeight}</span>
+              <span>letter-spacing: {style.letterSpacing}</span>
             </div>
           </div>
           <p
             class="style-specimen"
-            style={`font-family: var(--font-heading); font-size: ${style.size}; font-weight: ${style.weight}; line-height: ${parseInt(style.lineHeight) / 100};`}
+            style={`font-family: var(--font-heading); font-size: ${style.size}; font-weight: ${style.weight}; line-height: ${parseInt(style.lineHeight) / 100}; letter-spacing: ${style.letterSpacing};`}
           >
             {sampleText}
           </p>
@@ -230,23 +232,24 @@ const sampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nun
             <th>Mobile</th>
             <th>Weight</th>
             <th>Line Height</th>
+            <th>Letter Spacing</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>Display</td><td>Ubuntu</td><td>64px</td><td>32px</td><td>700</td><td>125%</td></tr>
-          <tr><td>H1</td><td>Ubuntu</td><td>40px</td><td>30px</td><td>700</td><td>125%</td></tr>
-          <tr><td>H2</td><td>Ubuntu</td><td>34px</td><td>28px</td><td>700</td><td>150%</td></tr>
-          <tr><td>H3</td><td>Ubuntu</td><td>28px</td><td>24px</td><td>700</td><td>150%</td></tr>
-          <tr><td>H4</td><td>Ubuntu</td><td>24px</td><td>22px</td><td>700</td><td>150%</td></tr>
-          <tr><td>H5</td><td>Ubuntu</td><td>22px</td><td>20px</td><td>700</td><td>150%</td></tr>
-          <tr><td>H6</td><td>Ubuntu</td><td>18px</td><td>18px</td><td>700</td><td>150%</td></tr>
-          <tr><td>Lead</td><td>Metropolis</td><td>18px</td><td>18px</td><td>400 – 600</td><td>150%</td></tr>
-          <tr><td>Body</td><td>Metropolis</td><td>16px</td><td>16px</td><td>400 – 600</td><td>150%</td></tr>
-          <tr><td>Small</td><td>Metropolis</td><td>14px</td><td>14px</td><td>400 – 600</td><td>150%</td></tr>
-          <tr><td>XS</td><td>Metropolis</td><td>12px</td><td>12px</td><td>400 – 600</td><td>150%</td></tr>
-          <tr><td>Button</td><td>Ubuntu</td><td>18px</td><td>16px</td><td>600</td><td>100%</td></tr>
-          <tr><td>Button CAPS</td><td>Ubuntu</td><td>18px</td><td>—</td><td>600</td><td>100%</td></tr>
-          <tr><td>URL</td><td>Metropolis</td><td>16px</td><td>16px</td><td>700</td><td>150%</td></tr>
+          <tr><td>Display</td><td>Ubuntu</td><td>64px</td><td>32px</td><td>500</td><td>125%</td><td>-2px</td></tr>
+          <tr><td>H1</td><td>Ubuntu</td><td>40px</td><td>30px</td><td>500</td><td>125%</td><td>-2px</td></tr>
+          <tr><td>H2</td><td>Ubuntu</td><td>34px</td><td>28px</td><td>500</td><td>150%</td><td>-1px</td></tr>
+          <tr><td>H3</td><td>Ubuntu</td><td>28px</td><td>24px</td><td>500</td><td>150%</td><td>-0.5px</td></tr>
+          <tr><td>H4</td><td>Ubuntu</td><td>24px</td><td>22px</td><td>500</td><td>150%</td><td>0</td></tr>
+          <tr><td>H5</td><td>Ubuntu</td><td>22px</td><td>20px</td><td>500</td><td>150%</td><td>0</td></tr>
+          <tr><td>H6</td><td>Ubuntu</td><td>18px</td><td>18px</td><td>500</td><td>150%</td><td>0</td></tr>
+          <tr><td>Lead</td><td>Metropolis</td><td>18px</td><td>18px</td><td>400 – 600</td><td>150%</td><td>0</td></tr>
+          <tr><td>Body</td><td>Metropolis</td><td>16px</td><td>16px</td><td>400 – 600</td><td>150%</td><td>0</td></tr>
+          <tr><td>Small</td><td>Metropolis</td><td>14px</td><td>14px</td><td>400 – 600</td><td>150%</td><td>0</td></tr>
+          <tr><td>XS</td><td>Metropolis</td><td>12px</td><td>12px</td><td>400 – 600</td><td>150%</td><td>0</td></tr>
+          <tr><td>Button</td><td>Ubuntu</td><td>18px</td><td>16px</td><td>500</td><td>100%</td><td>0</td></tr>
+          <tr><td>Button CAPS</td><td>Ubuntu</td><td>18px</td><td>—</td><td>500</td><td>100%</td><td>0</td></tr>
+          <tr><td>URL</td><td>Metropolis</td><td>16px</td><td>16px</td><td>600</td><td>150%</td><td>0</td></tr>
         </tbody>
       </table>
     </div>
@@ -262,7 +265,7 @@ const sampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nun
   .section-title {
     font-size: 20px;
     font-family: var(--font-heading);
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-semibold);
     margin-bottom: var(--space-4);
     color: var(--color-black);
   }
@@ -293,7 +296,7 @@ const sampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nun
 
   .font-specimen--heading {
     font-family: var(--font-heading);
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-medium);
   }
 
   .font-specimen--body {
